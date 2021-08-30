@@ -1,4 +1,4 @@
-static const u32 sTutorMoves[TUTOR_MOVE_COUNT] =
+static const u16 sTutorMoves[TUTOR_MOVE_COUNT] =
 {
     [TUTOR_MOVE_MEGA_PUNCH] = MOVE_MEGA_PUNCH,
     [TUTOR_MOVE_SWORDS_DANCE] = MOVE_SWORDS_DANCE,
@@ -24,7 +24,7 @@ static const u32 sTutorMoves[TUTOR_MOVE_COUNT] =
 
 #define TUTOR(move) (1 << (TUTOR_##move))
 
-static const u32 sTutorLearnsets[] =
+static const u16 sTutorLearnsets[] =
 {
     [SPECIES_NONE] = 0,
 
