@@ -24,7 +24,7 @@ static const u16 sTutorMoves[TUTOR_MOVE_COUNT] =
 
 #define TUTOR(move) (1 << (TUTOR_##move))
 
-static const u16 sTutorLearnsets[] =
+static const u32 sTutorLearnsets[] =
 {
     [SPECIES_NONE] = 0,
 
