@@ -910,6 +910,9 @@ static void Task_BuyMenu(u8 taskId)
             if (!IsEnoughMoney(&gSaveBlock1Ptr->money, gShopData.itemPrice))
             {
                 BuyMenuDisplayMessage(taskId, gText_YouDontHaveMoney, BuyMenuReturnToItemList);
+            } else if (ItemId_GetPocket(itemId) == POCKET_TM_CASE && CheckBagHasItem(itemId, 1))
+            {
+                BuyMenuDisplayMessage(taskId, gText_YouAlreadyHaveThis, BuyMenuReturnToItemList);
             }
             else
             {

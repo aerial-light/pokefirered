@@ -15,6 +15,9 @@ Text_TooBadBagFull:: @ 81A5242
 	.string "Too bad!\n"
 	.string "The BAG is full…$"
 
+Text_YouAlreadyHaveThis::
+    .string "You already have this item.$"
+
 Text_FoundXCoins:: @ 81A525C
 	.string "{PLAYER} found\n"
 	.string "{STR_VAR_1} {STR_VAR_2}!$"
