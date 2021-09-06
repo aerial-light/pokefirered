@@ -55,8 +55,7 @@ ViridianCity_Text_ShowYouHowToCatchMons:: @ 817DD4E
     .string "its data.\p"
     .string "…You don't know how to catch\n"
     .string "a POKéMON?\p"
-    .string "I suppose I had better show you\n"
-    .string "then!$"
+    .string "Here, take this!$"
 
 ViridianCity_Text_ThatWasEducationalTakeThis:: @ 817DE9B
     .string "There! Now tell me, that was\n"
