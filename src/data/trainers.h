@@ -4209,7 +4209,7 @@ const struct Trainer gTrainers[] = {
         .doubleBattle = FALSE,
         .aiFlags = AI_SCRIPT_CHECK_BAD_MOVE | AI_SCRIPT_TRY_TO_FAINT | AI_SCRIPT_CHECK_VIABILITY,
         .partySize = NELEMS(sTrainerMons_LeaderGiovanni),
-        .party = {.NoItemCustomMoves = sTrainerMons_LeaderGiovanni}
+        .party = {.ItemCustomMoves = sTrainerMons_LeaderGiovanni}
     },
     [TRAINER_TEAM_ROCKET_GRUNT] = {
         .partyFlags = 0,
@@ -4977,7 +4977,7 @@ const struct Trainer gTrainers[] = {
         .doubleBattle = FALSE,
         .aiFlags = AI_SCRIPT_CHECK_BAD_MOVE | AI_SCRIPT_TRY_TO_FAINT | AI_SCRIPT_CHECK_VIABILITY,
         .partySize = NELEMS(sTrainerMons_LeaderBrock),
-        .party = {.NoItemCustomMoves = sTrainerMons_LeaderBrock}
+        .party = {.ItemCustomMoves = sTrainerMons_LeaderBrock}
     },
     [TRAINER_LEADER_MISTY] = {
         .partyFlags = F_TRAINER_PARTY_CUSTOM_MOVESET,
@@ -4989,7 +4989,7 @@ const struct Trainer gTrainers[] = {
         .doubleBattle = FALSE,
         .aiFlags = AI_SCRIPT_CHECK_BAD_MOVE | AI_SCRIPT_TRY_TO_FAINT | AI_SCRIPT_CHECK_VIABILITY,
         .partySize = NELEMS(sTrainerMons_LeaderMisty),
-        .party = {.NoItemCustomMoves = sTrainerMons_LeaderMisty}
+        .party = {.ItemCustomMoves = sTrainerMons_LeaderMisty}
     },
     [TRAINER_LEADER_LT_SURGE] = {
         .partyFlags = F_TRAINER_PARTY_CUSTOM_MOVESET,
@@ -5001,7 +5001,7 @@ const struct Trainer gTrainers[] = {
         .doubleBattle = FALSE,
         .aiFlags = AI_SCRIPT_CHECK_BAD_MOVE | AI_SCRIPT_TRY_TO_FAINT | AI_SCRIPT_CHECK_VIABILITY,
         .partySize = NELEMS(sTrainerMons_LeaderLtSurge),
-        .party = {.NoItemCustomMoves = sTrainerMons_LeaderLtSurge}
+        .party = {.ItemCustomMoves = sTrainerMons_LeaderLtSurge}
     },
     [TRAINER_LEADER_ERIKA] = {
         .partyFlags = F_TRAINER_PARTY_CUSTOM_MOVESET,
@@ -5013,7 +5013,7 @@ const struct Trainer gTrainers[] = {
         .doubleBattle = FALSE,
         .aiFlags = AI_SCRIPT_CHECK_BAD_MOVE | AI_SCRIPT_TRY_TO_FAINT | AI_SCRIPT_CHECK_VIABILITY,
         .partySize = NELEMS(sTrainerMons_LeaderErika),
-        .party = {.NoItemCustomMoves = sTrainerMons_LeaderErika}
+        .party = {.ItemCustomMoves = sTrainerMons_LeaderErika}
     },
     [TRAINER_LEADER_KOGA] = {
         .partyFlags = F_TRAINER_PARTY_CUSTOM_MOVESET,
@@ -5025,7 +5025,7 @@ const struct Trainer gTrainers[] = {
         .doubleBattle = FALSE,
         .aiFlags = AI_SCRIPT_CHECK_BAD_MOVE | AI_SCRIPT_TRY_TO_FAINT | AI_SCRIPT_CHECK_VIABILITY,
         .partySize = NELEMS(sTrainerMons_LeaderKoga),
-        .party = {.NoItemCustomMoves = sTrainerMons_LeaderKoga}
+        .party = {.ItemCustomMoves = sTrainerMons_LeaderKoga}
     },
     [TRAINER_LEADER_BLAINE] = {
         .partyFlags = F_TRAINER_PARTY_CUSTOM_MOVESET,
@@ -5037,7 +5037,7 @@ const struct Trainer gTrainers[] = {
         .doubleBattle = FALSE,
         .aiFlags = AI_SCRIPT_CHECK_BAD_MOVE | AI_SCRIPT_TRY_TO_FAINT | AI_SCRIPT_CHECK_VIABILITY,
         .partySize = NELEMS(sTrainerMons_LeaderBlaine),
-        .party = {.NoItemCustomMoves = sTrainerMons_LeaderBlaine}
+        .party = {.ItemCustomMoves = sTrainerMons_LeaderBlaine}
     },
     [TRAINER_LEADER_SABRINA] = {
         .partyFlags = F_TRAINER_PARTY_CUSTOM_MOVESET,
@@ -5049,7 +5049,7 @@ const struct Trainer gTrainers[] = {
         .doubleBattle = FALSE,
         .aiFlags = AI_SCRIPT_CHECK_BAD_MOVE | AI_SCRIPT_TRY_TO_FAINT | AI_SCRIPT_CHECK_VIABILITY,
         .partySize = NELEMS(sTrainerMons_LeaderSabrina),
-        .party = {.NoItemCustomMoves = sTrainerMons_LeaderSabrina}
+        .party = {.ItemCustomMoves = sTrainerMons_LeaderSabrina}
     },
     [TRAINER_GENTLEMAN_THOMAS] = {
         .partyFlags = 0,
