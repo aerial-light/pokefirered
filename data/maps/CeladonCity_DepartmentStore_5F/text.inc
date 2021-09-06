@@ -21,3 +21,25 @@ CeladonCity_DepartmentStore_5F_Text_HereForStatEnhancers:: @ 8195CA0
 CeladonCity_DepartmentStore_5F_Text_Drugstore:: @ 8195D14
     .string "5F: DRUGSTORE$"
 
+Text_ThunderPunchTeach::
+    .string "HYAH!\n"
+    .string "…\p"
+    .string "Observe the real power of\n"
+    .string "THUNDERPUNCH.\p"
+    .string "Lightning flashes, and disappears.\n"
+    .string "None can stop it.\p"
+    .string "Let me teach this move\n"
+    .string "to your POKéMON.$"
+
+Text_ThunderPunchDeclined::
+    .string "HYAH!\n"
+    .string "I shall teach this at any time.$"
+
+Text_ThunderPunchWhichMon::
+    .string "Which POKéMON should learn\n"
+    .string "THUNDERPUNCH?$"
+
+Text_ThunderPunchTaught::
+    .string "HYAH!\n"
+    .string "When lightning strikes, it casts\n"
+    .string "a shadow.$"

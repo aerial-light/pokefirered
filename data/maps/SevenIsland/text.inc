@@ -1,22 +1,3 @@
-Text_SwordsDanceTeach:: @ 8182F01
-    .string "Not many people come out here.\p"
-    .string "If I train here, I'm convinced that\n"
-    .string "I'll get stronger and stronger.\p"
-    .string "Yep, stronger and stronger…\p"
-    .string "How would you like to learn a move\n"
-    .string "like that? It's SWORDS DANCE.$"
-
-Text_SwordsDanceDeclined:: @ 8182FC1
-    .string "Well, that's fine, too.$"
-
-Text_SwordsDanceWhichMon:: @ 8182FD9
-    .string "All right, pick which POKéMON\n"
-    .string "I should teach it to.$"
-
-Text_SwordsDanceTaught:: @ 818300D
-    .string "If only we could keep getting\n"
-    .string "stronger and stronger, eh?$"
-
 SevenIsland_Text_IslandSign:: @ 8183046
     .string "SEVEN ISLAND\n"
     .string "Quest Island of Infinity$"

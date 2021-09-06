@@ -46,3 +46,22 @@ Route10_PokemonCenter_1F_Text_ExplainEverstone:: @ 819E7AF
     .string "It will prevent evolution according\n"
     .string "to the PROFESSOR.$"
 
+Text_EndureTeach::
+    .string "ROCK TUNNEL is a serious challenge\n"
+    .string "for us HIKERS.\p"
+    .string "For one, it's pitch-black inside.\p"
+    .string "Do you think you'll be able to"
+    .string "endure such an ordeal?\p"
+    .string "How about this? I'll teach\n"
+    .string "ENDURE to your POKéMON.\p"
+
+Text_EndureDeclined::
+    .string "You sure? It's tough, I tell ya.$"
+
+Text_EndureWhichMon::
+    .string "Which POKéMON wants to learn\n"
+    .string "ENDURE?$"
+
+Text_EndureTaught::
+    .string "That should get you through\n"
+    .string "some real tough battles.$"

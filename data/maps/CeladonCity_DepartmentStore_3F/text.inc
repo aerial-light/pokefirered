@@ -68,3 +68,25 @@ Text_CounterWhichMon:: @ 8195A08
 Text_CounterTaught:: @ 8195A31
     .string "Are you using that COUNTER move\n"
     .string "I taught your POKéMON?$"
+
+Text_FirePunchTeach::
+    .string "HYAH!\n"
+    .string "This packs a ferocious punch!\p"
+    .string "Witness the power of\n"
+    .string "FIRE PUNCH.\p"
+    .string "A mighty fist of flames!\n"
+    .string "Only ashes will remain!\p"
+    .string "What do you say, I teach\n"
+    .string "this move to your POKéMON!$"
+
+Text_FirePunchDeclined::
+    .string "HYAH!\n"
+    .string "I'm sure you will be back!$"
+
+Text_FirePunchWhichMon::
+    .string "Which POKéMON should learn\n"
+    .string "FIRE PUNCH?$"
+
+Text_FirePunchTaught::
+    .string "HYAH!\n"
+    .string "Do you feel the flaming power?$"
