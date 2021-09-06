@@ -5229,7 +5229,7 @@ const struct Trainer gTrainers[] = {
         .doubleBattle = FALSE,
         .aiFlags = AI_SCRIPT_CHECK_BAD_MOVE | AI_SCRIPT_TRY_TO_FAINT | AI_SCRIPT_CHECK_VIABILITY,
         .partySize = NELEMS(sTrainerMons_RivalRoute22LateSquirtle),
-        .party = {.NoItemCustomMoves = sTrainerMons_RivalRoute22LateSquirtle}
+        .party = {.ItemCustomMoves = sTrainerMons_RivalRoute22LateSquirtle}
     },
     [TRAINER_RIVAL_ROUTE22_LATE_BULBASAUR] = {
         .partyFlags = F_TRAINER_PARTY_CUSTOM_MOVESET,
@@ -5241,7 +5241,7 @@ const struct Trainer gTrainers[] = {
         .doubleBattle = FALSE,
         .aiFlags = AI_SCRIPT_CHECK_BAD_MOVE | AI_SCRIPT_TRY_TO_FAINT | AI_SCRIPT_CHECK_VIABILITY,
         .partySize = NELEMS(sTrainerMons_RivalRoute22LateBulbasaur),
-        .party = {.NoItemCustomMoves = sTrainerMons_RivalRoute22LateBulbasaur}
+        .party = {.ItemCustomMoves = sTrainerMons_RivalRoute22LateBulbasaur}
     },
     [TRAINER_RIVAL_ROUTE22_LATE_CHARMANDER] = {
         .partyFlags = F_TRAINER_PARTY_CUSTOM_MOVESET,
@@ -5253,7 +5253,7 @@ const struct Trainer gTrainers[] = {
         .doubleBattle = FALSE,
         .aiFlags = AI_SCRIPT_CHECK_BAD_MOVE | AI_SCRIPT_TRY_TO_FAINT | AI_SCRIPT_CHECK_VIABILITY,
         .partySize = NELEMS(sTrainerMons_RivalRoute22LateCharmander),
-        .party = {.NoItemCustomMoves = sTrainerMons_RivalRoute22LateCharmander}
+        .party = {.ItemCustomMoves = sTrainerMons_RivalRoute22LateCharmander}
     },
     [TRAINER_CHAMPION_FIRST_SQUIRTLE] = {
         .partyFlags = F_TRAINER_PARTY_CUSTOM_MOVESET | F_TRAINER_PARTY_HELD_ITEM,
