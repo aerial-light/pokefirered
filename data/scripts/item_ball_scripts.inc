@@ -178,8 +178,8 @@ Route15_EventScript_ItemTM18:: @ 81BE7CA
 	finditem ITEM_TM18
 	end
 
-SafariZone_Center_EventScript_ItemNugget:: @ 81BE7D7
-	finditem ITEM_NUGGET
+SafariZone_Center_EventScript_ItemLuckyEgg:: @ 81BE7D7
+	finditem ITEM_LUCKY_EGG
 	end
 
 SafariZone_East_EventScript_ItemMaxPotion:: @ 81BE7E4
@@ -236,6 +236,10 @@ SilphCo_4F_EventScript_ItemEscapeRope:: @ 81BE880
 
 SilphCo_4F_EventScript_ItemFullHeal:: @ 81BE88D
 	finditem ITEM_FULL_HEAL
+	end
+
+SilphCo_4F_EventScript_ItemTM36::
+	finditem ITEM_TM36
 	end
 
 SilphCo_5F_EventScript_ItemProtein:: @ 81BE89A
@@ -628,10 +632,6 @@ FourIsland_IcefallCave_B1F_EventScript_ItemNeverMeltIce:: @ 81BED7A
 
 FiveIsland_RocketWarehouse_EventScript_ItemBigPearl:: @ 81BED87
 	finditem ITEM_BIG_PEARL
-	end
-
-FiveIsland_RocketWarehouse_EventScript_ItemTM36:: @ 81BED94
-	finditem ITEM_TM36
 	end
 
 FiveIsland_RocketWarehouse_EventScript_ItemPearl:: @ 81BEDA1

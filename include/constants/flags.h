@@ -182,12 +182,12 @@
 #define FLAG_HIDE_SAFFRON_CITY_POKECENTER_SABRINA_JOURNALS 0x0AE
 
 // Unused?
-#define FLAG_0x0AF               0x0AF
-#define FLAG_0x0B0               0x0B0
-#define FLAG_0x0B1               0x0B1
-#define FLAG_0x0B2               0x0B2
-#define FLAG_0x0B3               0x0B3
-#define FLAG_0x0B4               0x0B4
+#define FLAG_HIDE_CELADON_CITY_METAL_COAT                  0x0AF
+#define FLAG_HIDE_CINNABAR_ISLAND_UPGRADE                  0x0B0
+#define FLAG_HIDE_FUCHSIA_CITY_KINGS_ROCK                  0x0B1
+#define FLAG_HIDE_ROUTE_20_DRAGON_SCALE                    0x0B2
+#define FLAG_HIDE_ROUTE_21_DEEPSEASCALE                    0x0B3
+#define FLAG_HIDE_ROUTE_21_DEEPSEATOOTH                    0x0B4
 #define FLAG_0x0B5               0x0B5
 #define FLAG_0x0B6               0x0B6
 #define FLAG_0x0B7               0x0B7
@@ -394,7 +394,7 @@
 #define FLAG_HIDE_ROUTE12_TM48                                  0x17E
 #define FLAG_HIDE_ROUTE12_IRON                                  0x17F
 #define FLAG_HIDE_ROUTE15_TM18                                  0x180
-#define FLAG_HIDE_SAFARI_ZONE_CENTER_NUGGET                     0x181
+#define FLAG_HIDE_SAFARI_ZONE_CENTER_LUCKY_EGG                  0x181
 #define FLAG_HIDE_SAFARI_ZONE_EAST_MAX_POTION                   0x182
 #define FLAG_HIDE_SAFARI_ZONE_EAST_FULL_RESTORE                 0x183
 #define FLAG_HIDE_SAFARI_ZONE_EAST_TM11                         0x184
@@ -510,7 +510,7 @@
 #define FLAG_HIDE_FOUR_ISLAND_ICEFALL_CAVE_B1F_FULL_RESTORE     0x1F2
 #define FLAG_HIDE_FOUR_ISLAND_ICEFALL_CAVE_B1F_NEVER_MELT_ICE   0x1F3
 #define FLAG_HIDE_FIVE_ISLAND_ROCKET_WAREHOUSE_BIG_PEARL        0x1F4
-#define FLAG_HIDE_FIVE_ISLAND_ROCKET_WAREHOUSE_TM36             0x1F5
+#define FLAG_HIDE_SILPH_CO_4F_TM36                              0x1F5
 #define FLAG_HIDE_FIVE_ISLAND_ROCKET_WAREHOUSE_PEARL            0x1F6
 #define FLAG_HIDE_FIVE_ISLAND_ROCKET_WAREHOUSE_UP_GRADE         0x1F7
 #define FLAG_HIDE_FIVE_ISLAND_LOST_CAVE_ROOM10_SILK_SCARF       0x1F8
