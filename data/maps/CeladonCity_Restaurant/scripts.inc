@@ -6,7 +6,14 @@ CeladonCity_Restaurant_EventScript_Chef:: @ 816D1EB
 	end
 
 CeladonCity_Restaurant_EventScript_Woman:: @ 816D1F4
-	msgbox CeladonCity_Restaurant_Text_OftenGoToDrugstore, MSGBOX_NPC
+	goto_if_questlog EventScript_ReleaseEnd
+	lock
+	faceplayer
+	message Text_HowMayIServeYou
+	waitmessage
+	pokemart CeladonCity_Restaurant_Items
+	msgbox Text_PleaseComeAgain
+	release
 	end
 
 CeladonCity_Restaurant_EventScript_CoinCaseMan:: @ 816D1FD
@@ -38,4 +45,19 @@ CeladonCity_Restaurant_EventScript_WorkerM:: @ 816D255
 
 CeladonCity_Restaurant_EventScript_FatMan:: @ 816D25E
 	msgbox CeladonCity_Restaurant_Text_ManLostItAllAtSlots, MSGBOX_NPC
+	end
+
+Text_HowMayIServeYou::
+	.string "Hi, there!\n"
+	.string "What would you like for today?$"
+
+CeladonCity_Restaurant_Items::
+	.2byte ITEM_POMEG_BERRY
+	.2byte ITEM_KELPSY_BERRY
+	.2byte ITEM_QUALOT_BERRY
+	.2byte ITEM_HONDEW_BERRY
+	.2byte ITEM_GREPA_BERRY
+	.2byte ITEM_TAMATO_BERRY
+	.2byte ITEM_NONE
+	release
 	end

@@ -3,10 +3,6 @@ CeladonCity_Restaurant_Text_TakingBreakRightNow:: @ 81978E6
     .string "Sorry, but we're taking a break\n"
     .string "right now.$"
 
-CeladonCity_Restaurant_Text_OftenGoToDrugstore:: @ 8197915
-    .string "My POKéMON are weak, so I often\n"
-    .string "have to go to the DRUGSTORE.$"
-
 CeladonCity_Restaurant_Text_PsstBasementUnderGameCorner:: @ 8197952
     .string "Psst! There's a basement under the\n"
     .string "GAME CORNER, I hear.$"
