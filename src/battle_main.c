@@ -1522,7 +1522,6 @@ static u8 CreateNPCTrainerParty(struct Pokemon *party, u16 trainerNum)
     u32 personalityValue;
     u8 fixedIV;
     s32 i, j;
-    s32 customPV;
 
     if (trainerNum == TRAINER_SECRET_BASE)
         return 0;
@@ -1589,11 +1588,9 @@ static u8 CreateNPCTrainerParty(struct Pokemon *party, u16 trainerNum)
 
                 for (j = 0; gSpeciesNames[partyData[i].species][j] != EOS; ++j)
                     nameHash += gSpeciesNames[partyData[i].species][j];
-                do
-                {
-                    customPV = Random32();
-                } while (IsShinyOtIdPersonality(OT_ID_RANDOM_NO_SHINY, customPV) || partyData[i].nature != GetNatureFromPersonality(customPV));
-                CreateMon(&party[i], partyData[i].species, partyData[i].lvl, 31, TRUE, customPV, OT_ID_RANDOM_NO_SHINY, 0);
+                personalityValue += nameHash << 8;
+                CreateMon(&party[i], partyData[i].species, partyData[i].lvl, 31, TRUE, personalityValue, OT_ID_RANDOM_NO_SHINY, 0);
+                SetMonData(&party[i], MON_DATA_NATURE, &partyData[i].nature);
                 SetMonData(&party[i], MON_DATA_HELD_ITEM, &partyData[i].heldItem);
                 for (j = 0; j < NUM_STATS; ++j)
                 {

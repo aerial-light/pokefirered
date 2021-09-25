@@ -70,7 +70,9 @@ static EWRAM_DATA struct OakSpeechNidoranFStruct *sOakSpeechNidoranResources = N
 
 static union PokemonSubstruct *GetSubstruct(struct BoxPokemon *boxMon, u32 personality, u8 substructType);
 static u16 GetDeoxysStat(struct Pokemon *mon, s32 statId);
+static bool8 IsShinyOtIdPersonality(u32 otId, u32 personality);
 static u16 ModifyStatByNature(u8 nature, u16 n, u8 statIndex);
+static u8 GetNatureFromPersonality(u32 personality);
 static bool8 PartyMonHasStatus(struct Pokemon *mon, u32 unused, u32 healMask, u8 battleId);
 static bool8 HealStatusConditions(struct Pokemon *mon, u32 unused, u32 healMask, u8 battleId);
 static bool8 IsPokemonStorageFull(void);
@@ -1725,6 +1727,7 @@ void CreateBoxMon(struct BoxPokemon *boxMon, u16 species, u8 level, u8 fixedIV, 
     u32 personality;
     u32 value;
     u16 checksum;
+    u8 nature;
 
     ZeroBoxMonData(boxMon);
 
@@ -1733,7 +1736,9 @@ void CreateBoxMon(struct BoxPokemon *boxMon, u16 species, u8 level, u8 fixedIV, 
     else
         personality = Random32();
 
+    nature = personality % 25;
     SetBoxMonData(boxMon, MON_DATA_PERSONALITY, &personality);
+    SetBoxMonData(boxMon, MON_DATA_NATURE, &nature);
 
     //Determine original trainer ID
     if (otIdType == OT_ID_RANDOM_NO_SHINY) //Pokemon cannot be shiny
@@ -2994,6 +2999,9 @@ u32 GetBoxMonData(struct BoxPokemon *boxMon, s32 field, u8 *data)
     case MON_DATA_SANITY_IS_EGG:
         retVal = boxMon->isEgg;
         break;
+    case MON_DATA_NATURE:
+        retVal = boxMon->nature;
+        break;
     case MON_DATA_OT_NAME:
     {
         retVal = 0;
@@ -3387,6 +3395,9 @@ void SetBoxMonData(struct BoxPokemon *boxMon, s32 field, const void *dataArg)
         break;
     case MON_DATA_SANITY_IS_EGG:
         SET8(boxMon->isEgg);
+        break;
+    case MON_DATA_NATURE:
+        SET8(boxMon->nature);
         break;
     case MON_DATA_OT_NAME:
     {
@@ -4872,7 +4883,7 @@ const u8 *Battle_PrintStatBoosterEffectMessage(u16 itemId)
 
 u8 GetNature(struct Pokemon *mon)
 {
-    return GetMonData(mon, MON_DATA_PERSONALITY, NULL) % 25;
+    return GetMonData(mon, MON_DATA_NATURE, NULL);
 }
 
 u8 GetNatureFromPersonality(u32 personality)
