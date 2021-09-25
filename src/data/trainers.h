@@ -4020,7 +4020,7 @@ const struct Trainer gTrainers[] = {
         .party = {.ItemCustomMoves = sTrainerMons_RivalCeruleanCharmander}
     },
     [TRAINER_SCIENTIST_TED] = {
-        .partyFlags = 0,
+        .partyFlags = F_TRAINER_PARTY_CUSTOM_MOVESET | F_TRAINER_PARTY_HELD_ITEM,
         .trainerClass = CLASS_SCIENTIST,
         .encounterMusic_gender = TRAINER_ENCOUNTER_MUSIC_SUSPICIOUS,
         .trainerPic = TRAINER_PIC_SCIENTIST,
@@ -4029,7 +4029,7 @@ const struct Trainer gTrainers[] = {
         .doubleBattle = FALSE,
         .aiFlags = AI_SCRIPT_CHECK_BAD_MOVE,
         .partySize = NELEMS(sTrainerMons_ScientistTed),
-        .party = {.NoItemDefaultMoves = sTrainerMons_ScientistTed}
+        .party = {.ItemCustomMoves = sTrainerMons_ScientistTed}
     },
     [TRAINER_SCIENTIST_CONNOR] = {
         .partyFlags = F_TRAINER_PARTY_CUSTOM_MOVESET,
@@ -7212,7 +7212,7 @@ const struct Trainer gTrainers[] = {
         .party = {.NoItemCustomMoves = sTrainerMons_CooltrainerMichelle}
     },
     [TRAINER_COOL_COUPLE_LEX_NYA] = {
-        .partyFlags = F_TRAINER_PARTY_CUSTOM_MOVESET,
+        .partyFlags = F_TRAINER_PARTY_CUSTOM_MOVESET | F_TRAINER_PARTY_HELD_ITEM,
         .trainerClass = CLASS_COOL_COUPLE,
         .encounterMusic_gender = TRAINER_ENCOUNTER_MUSIC_COOL,
         .trainerPic = TRAINER_PIC_COOL_COUPLE,
@@ -7221,7 +7221,7 @@ const struct Trainer gTrainers[] = {
         .doubleBattle = TRUE,
         .aiFlags = AI_SCRIPT_CHECK_BAD_MOVE | AI_SCRIPT_TRY_TO_FAINT | AI_SCRIPT_CHECK_VIABILITY,
         .partySize = NELEMS(sTrainerMons_CoolCoupleLexNya),
-        .party = {.NoItemCustomMoves = sTrainerMons_CoolCoupleLexNya}
+        .party = {.ItemCustomMoves = sTrainerMons_CoolCoupleLexNya}
     },
     [TRAINER_RUIN_MANIAC_BRANDON] = {
         .partyFlags = 0,
