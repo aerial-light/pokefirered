@@ -250,10 +250,12 @@ Route25_SeaCottage_EventScript_BillsMonList:: @ 81707D8
 	multichoice 0, 0, MULTICHOICE_EEVEELUTIONS, FALSE
 	switch VAR_RESULT
 	case 0, Route25_SeaCottage_EventScript_ViewEevee
-	case 1, Route25_SeaCottage_EventScript_ViewFlareon
-	case 2, Route25_SeaCottage_EventScript_ViewJolteon
-	case 3, Route25_SeaCottage_EventScript_ViewVaporeon
-	case 4, Route25_SeaCottage_EventScript_ExitBillsMonList
+	case 1, Route25_SeaCottage_EventScript_ViewEspeon
+	case 2, Route25_SeaCottage_EventScript_ViewFlareon
+	case 3, Route25_SeaCottage_EventScript_ViewJolteon
+	case 4, Route25_SeaCottage_EventScript_ViewUmbreon
+	case 5, Route25_SeaCottage_EventScript_ViewVaporeon
+	case 6, Route25_SeaCottage_EventScript_ExitBillsMonList
 	case 127, Route25_SeaCottage_EventScript_ExitBillsMonList
 	end
 
@@ -262,6 +264,15 @@ Route25_SeaCottage_EventScript_ViewEevee:: @ 817082B
 	waitbuttonpress
 	erasemonpic
 	setvar VAR_0x8004, SPECIES_EEVEE
+	special SetSeenMon
+	goto Route25_SeaCottage_EventScript_BillsMonList
+	end
+
+Route25_SeaCottage_EventScript_ViewEspeon::
+	drawmonpic SPECIES_ESPEON, 10, 3
+	waitbuttonpress
+	erasemonpic
+	setvar VAR_0x8004, SPECIES_ESPEON
 	special SetSeenMon
 	goto Route25_SeaCottage_EventScript_BillsMonList
 	end
@@ -280,6 +291,15 @@ Route25_SeaCottage_EventScript_ViewJolteon:: @ 8170855
 	waitbuttonpress
 	erasemonpic
 	setvar VAR_0x8004, SPECIES_JOLTEON
+	special SetSeenMon
+	goto Route25_SeaCottage_EventScript_BillsMonList
+	end
+
+Route25_SeaCottage_EventScript_ViewUmbreon::
+	drawmonpic SPECIES_UMBREON, 10, 3
+	waitbuttonpress
+	erasemonpic
+	setvar VAR_0x8004, SPECIES_UMBREON
 	special SetSeenMon
 	goto Route25_SeaCottage_EventScript_BillsMonList
 	end

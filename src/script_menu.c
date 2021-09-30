@@ -300,8 +300,10 @@ static const struct MenuAction sScriptMultiChoiceMenu_Unref_Shards_7[] = {
 
 static const struct MenuAction sScriptMultiChoiceMenu_Eeveelutions[] = {
     { gText_Eevee },
+    { gText_Espeon },
     { gText_Flareon },
     { gText_Jolteon },
+    { gText_Umbreon },
     { gText_Vaporeon },
     { gText_QuitLooking }
 };
