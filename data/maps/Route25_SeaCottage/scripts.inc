@@ -249,13 +249,12 @@ Route25_SeaCottage_EventScript_BillsMonList:: @ 81707D8
 	waitmessage
 	multichoice 0, 0, MULTICHOICE_EEVEELUTIONS, FALSE
 	switch VAR_RESULT
-	case 0, Route25_SeaCottage_EventScript_ViewEevee
-	case 1, Route25_SeaCottage_EventScript_ViewEspeon
-	case 2, Route25_SeaCottage_EventScript_ViewFlareon
-	case 3, Route25_SeaCottage_EventScript_ViewJolteon
-	case 4, Route25_SeaCottage_EventScript_ViewUmbreon
-	case 5, Route25_SeaCottage_EventScript_ViewVaporeon
-	case 6, Route25_SeaCottage_EventScript_ExitBillsMonList
+	case 0, Route25_SeaCottage_EventScript_ViewEspeon
+	case 1, Route25_SeaCottage_EventScript_ViewFlareon
+	case 2, Route25_SeaCottage_EventScript_ViewJolteon
+	case 3, Route25_SeaCottage_EventScript_ViewUmbreon
+	case 4, Route25_SeaCottage_EventScript_ViewVaporeon
+	case 5, Route25_SeaCottage_EventScript_ExitBillsMonList
 	case 127, Route25_SeaCottage_EventScript_ExitBillsMonList
 	end
 

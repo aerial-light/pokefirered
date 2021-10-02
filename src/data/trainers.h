@@ -4027,7 +4027,7 @@ const struct Trainer gTrainers[] = {
         .trainerName = _("TED"),
         .items = {},
         .doubleBattle = FALSE,
-        .aiFlags = AI_SCRIPT_CHECK_BAD_MOVE,
+        .aiFlags = AI_SCRIPT_CHECK_BAD_MOVE | AI_SCRIPT_TRY_TO_FAINT | AI_SCRIPT_CHECK_VIABILITY,
         .partySize = NELEMS(sTrainerMons_ScientistTed),
         .party = {.ItemCustomMoves = sTrainerMons_ScientistTed}
     },
