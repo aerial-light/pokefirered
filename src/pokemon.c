@@ -4118,10 +4118,10 @@ bool8 PokemonUseItemEffects(struct Pokemon *mon, u16 item, u8 partyIndex, u8 mov
                         if (evCount >= 510)
                             return TRUE;
                         data = GetMonData(mon, sGetMonDataEVConstants[i], NULL);
-                        if (data < 100)
+                        if (data < 252)
                         {
-                            if (data + itemEffect[idx] > 100)
-                                evDelta = 100 - (data + itemEffect[idx]) + itemEffect[idx];
+                            if (data + itemEffect[idx] > 252)
+                                evDelta = 252 - (data + itemEffect[idx]) + itemEffect[idx];
                             else
                                 evDelta = itemEffect[idx];
                             if (evCount + evDelta > 510)
