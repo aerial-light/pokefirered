@@ -50,10 +50,10 @@ Text_EndureTeach::
     .string "ROCK TUNNEL is a serious challenge\n"
     .string "for us HIKERS.\p"
     .string "For one, it's pitch-black inside.\p"
-    .string "Do you think you'll be able to"
+    .string "Do you think you'll be able to\n"
     .string "endure such an ordeal?\p"
     .string "How about this? I'll teach\n"
-    .string "ENDURE to your POKéMON.\p"
+    .string "ENDURE to your POKéMON.$"
 
 Text_EndureDeclined::
     .string "You sure? It's tough, I tell ya.$"

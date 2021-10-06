@@ -378,7 +378,7 @@ CeladonCity_Condominiums_Roof_EventScript_IcyWindTutor::
 	call EventScript_ChooseMoveTutorMon
 	compare VAR_RESULT, FALSE
 	goto_if_eq EventScript_IcyWindDeclined
-	goto EventScript_IcyWindDeclined
+	goto EventScript_IcyWindTaught
 	end
 
 EventScript_IcyWindDeclined::
@@ -402,7 +402,7 @@ Route10_PokemonCenter_1F_EventScript_EndureTutor::
 	call EventScript_ChooseMoveTutorMon
 	compare VAR_RESULT, FALSE
 	goto_if_eq EventScript_EndureDeclined
-	goto EventScript_EndureDeclined
+	goto EventScript_EndureTaught
 	end
 
 EventScript_EndureDeclined::
@@ -426,7 +426,7 @@ CeladonCity_DepartmentStore_3F_EventScript_FirePunchTutor::
 	call EventScript_ChooseMoveTutorMon
 	compare VAR_RESULT, FALSE
 	goto_if_eq EventScript_FirePunchDeclined
-	goto EventScript_FirePunchDeclined
+	goto EventScript_FirePunchTaught
 	end
 
 EventScript_FirePunchDeclined::
@@ -450,7 +450,7 @@ CeladonCity_DepartmentStore_4F_EventScript_IcePunchTutor::
 	call EventScript_ChooseMoveTutorMon
 	compare VAR_RESULT, FALSE
 	goto_if_eq EventScript_IcePunchDeclined
-	goto EventScript_IcePunchDeclined
+	goto EventScript_IcePunchTaught
 	end
 
 EventScript_IcePunchDeclined::
@@ -474,7 +474,7 @@ CeladonCity_DepartmentStore_5F_EventScript_ThunderPunchTutor::
 	call EventScript_ChooseMoveTutorMon
 	compare VAR_RESULT, FALSE
 	goto_if_eq EventScript_ThunderPunchDeclined
-	goto EventScript_ThunderPunchDeclined
+	goto EventScript_ThunderPunchTaught
 	end
 
 EventScript_ThunderPunchDeclined::
