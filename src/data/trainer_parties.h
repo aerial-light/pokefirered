@@ -2162,8 +2162,8 @@ static const struct TrainerMonNoItemCustomMoves sTrainerMons_HikerDudley[] = {
     {
         .iv = 200,
         .lvl = 21,
-        .species = SPECIES_GEODUDE,
-        .moves = {MOVE_MAGNITUDE, MOVE_ROCK_THROW, MOVE_MUD_SPORT, MOVE_DEFENSE_CURL},
+        .species = SPECIES_ARON,
+        .moves = {MOVE_ROCK_TOMB, MOVE_METAL_CLAW, MOVE_HEADBUTT, MOVE_PROTECT},
     },
     {
         .iv = 200,
@@ -2197,7 +2197,7 @@ static const struct TrainerMonNoItemDefaultMoves sTrainerMons_HikerEric[] = {
     {
         .iv = 200,
         .lvl = 20,
-        .species = SPECIES_ONIX,
+        .species = SPECIES_ARON,
     },
 };
 
@@ -2215,7 +2215,7 @@ static const struct TrainerMonNoItemDefaultMoves sTrainerMons_HikerLenny[] = {
     {
         .iv = 200,
         .lvl = 19,
-        .species = SPECIES_GEODUDE,
+        .species = SPECIES_ARON,
     },
     {
         .iv = 200,
@@ -2233,12 +2233,12 @@ static const struct TrainerMonNoItemDefaultMoves sTrainerMons_HikerOliver[] = {
     {
         .iv = 200,
         .lvl = 20,
-        .species = SPECIES_ONIX,
+        .species = SPECIES_ARON,
     },
     {
         .iv = 200,
         .lvl = 20,
-        .species = SPECIES_GEODUDE,
+        .species = SPECIES_ARON,
     },
 };
 
@@ -7746,7 +7746,7 @@ static const struct TrainerMonNoItemDefaultMoves sTrainerMons_PicnickerDana[] = 
     {
         .iv = 200,
         .lvl = 20,
-        .species = SPECIES_PIDGEY,
+        .species = SPECIES_SKITTY,
     },
 };
 
@@ -7764,7 +7764,7 @@ static const struct TrainerMonNoItemDefaultMoves sTrainerMons_PicnickerAriana[] 
     {
         .iv = 200,
         .lvl = 19,
-        .species = SPECIES_RATTATA,
+        .species = SPECIES_SENTRET,
     },
     {
         .iv = 200,

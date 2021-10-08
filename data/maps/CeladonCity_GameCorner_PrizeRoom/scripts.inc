@@ -25,12 +25,11 @@ CeladonCity_GameCorner_PrizeRoom_EventScript_ChoosePrizeMon:: @ 816CBB2
 	multichoice 11, 0, MULTICHOICE_GAME_CORNER_POKEMON_PRIZES, FALSE
 	switch VAR_RESULT
 	case 0, CeladonCity_GameCorner_PrizeRoom_EventScript_Abra
-	case 1, CeladonCity_GameCorner_PrizeRoom_EventScript_Clefairy
-	case 2, CeladonCity_GameCorner_PrizeRoom_EventScript_Pinsir
-	case 3, CeladonCity_GameCorner_PrizeRoom_EventScript_Scyther
-	case 4, CeladonCity_GameCorner_PrizeRoom_EventScript_Beldum
-	case 5, CeladonCity_GameCorner_PrizeRoom_EventScript_Porygon
-	case 6, CeladonCity_GameCorner_PrizeRoom_EventScript_EndPrizeExchange
+	case 1, CeladonCity_GameCorner_PrizeRoom_EventScript_Pinsir
+	case 2, CeladonCity_GameCorner_PrizeRoom_EventScript_Scyther
+	case 3, CeladonCity_GameCorner_PrizeRoom_EventScript_Beldum
+	case 4, CeladonCity_GameCorner_PrizeRoom_EventScript_Porygon
+	case 5, CeladonCity_GameCorner_PrizeRoom_EventScript_EndPrizeExchange
 	case 127, CeladonCity_GameCorner_PrizeRoom_EventScript_EndPrizeExchange
 	end
 
@@ -42,12 +41,6 @@ CeladonCity_GameCorner_PrizeRoom_EventScript_EndPrizeExchange:: @ 816CC10
 CeladonCity_GameCorner_PrizeRoom_EventScript_Abra:: @ 816CC15
 	setvar VAR_TEMP_1, SPECIES_ABRA
 	setvar VAR_TEMP_2, 180
-	goto CeladonCity_GameCorner_PrizeRoom_EventScript_ConfirmPrizeMon
-	end
-
-CeladonCity_GameCorner_PrizeRoom_EventScript_Clefairy:: @ 816CC25
-	setvar VAR_TEMP_1, SPECIES_CLEFAIRY
-	setvar VAR_TEMP_2, 500
 	goto CeladonCity_GameCorner_PrizeRoom_EventScript_ConfirmPrizeMon
 	end
 
@@ -315,9 +308,8 @@ CeladonCity_GameCorner_PrizeRoom_EventScript_ChoosePrizeItem:: @ 816CFB2
 	case 1, CeladonCity_GameCorner_PrizeRoom_EventScript_YellowFlute
 	case 2, CeladonCity_GameCorner_PrizeRoom_EventScript_FocusBand
 	case 3, CeladonCity_GameCorner_PrizeRoom_EventScript_WhiteHerb
-	case 4, CeladonCity_GameCorner_PrizeRoom_EventScript_BrightPowder
-	case 5, CeladonCity_GameCorner_PrizeRoom_EventScript_ChoiceBand
-	case 6, CeladonCity_GameCorner_PrizeRoom_EventScript_EndPrizeExchange
+	case 4, CeladonCity_GameCorner_PrizeRoom_EventScript_ChoiceBand
+	case 5, CeladonCity_GameCorner_PrizeRoom_EventScript_EndPrizeExchange
 	case 127, CeladonCity_GameCorner_PrizeRoom_EventScript_EndPrizeExchange
 	end
 
@@ -341,18 +333,12 @@ CeladonCity_GameCorner_PrizeRoom_EventScript_FocusBand::
 
 CeladonCity_GameCorner_PrizeRoom_EventScript_WhiteHerb::
 	setvar VAR_TEMP_1, ITEM_WHITE_HERB
-	setvar VAR_TEMP_2, 4800
-	goto CeladonCity_GameCorner_PrizeRoom_EventScript_ConfirmPrizeItem
-	end
-
-CeladonCity_GameCorner_PrizeRoom_EventScript_BrightPowder::
-	setvar VAR_TEMP_1, ITEM_BRIGHT_POWDER
-	setvar VAR_TEMP_2, 6400
+	setvar VAR_TEMP_2, 3200
 	goto CeladonCity_GameCorner_PrizeRoom_EventScript_ConfirmPrizeItem
 	end
 
 CeladonCity_GameCorner_PrizeRoom_EventScript_ChoiceBand::
 	setvar VAR_TEMP_1, ITEM_CHOICE_BAND
-	setvar VAR_TEMP_2, 8000
+	setvar VAR_TEMP_2, 4800
 	goto CeladonCity_GameCorner_PrizeRoom_EventScript_ConfirmPrizeItem
 	end

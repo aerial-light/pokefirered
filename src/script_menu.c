@@ -175,9 +175,8 @@ static const struct MenuAction sScriptMultiChoiceMenu_GameCornerBattleItemPrizes
     { gText_SmokeBall_800Coins },
     { gText_YellowFlute_1600Coins },
     { gText_FocusBand_3200Coins },
-    { gText_WhiteHerb_4800Coins },
-    { gText_BrightPowder_6400Coins },
-    { gText_ChoiceBand_8000Coins },
+    { gText_WhiteHerb_3200Coins },
+    { gText_ChoiceBand_4800Coins },
     { gText_NoThanks_2 }
 };
 
@@ -314,7 +313,6 @@ static const struct MenuAction sScriptMultiChoiceMenu_BikeShop[] = {
 
 static const struct MenuAction sScriptMultiChoiceMenu_GameCornerPokemonPrizes[] = {
     { gText_Abra_180Coins },
-    { gText_Clefairy_500Coins },
     { gText_Pinsir_2500Coins },
     { gText_Scyther_4600Coins },
     { gText_Beldum_5500Coins },
