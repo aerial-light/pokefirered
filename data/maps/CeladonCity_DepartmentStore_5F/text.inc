@@ -41,5 +41,5 @@ Text_ThunderPunchWhichMon::
 
 Text_ThunderPunchTaught::
     .string "HYAH!\n"
-    .string "When lightning strikes, it casts\n"
-    .string "a shadow.$"
+    .string "When lightning strikes, it casts\l"
+    .string "a shadow…$"
