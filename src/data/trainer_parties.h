@@ -4826,7 +4826,7 @@ static const struct TrainerMonItemCustomMoves sTrainerMons_BossGiovanni2[] = {
 
 static const struct TrainerMonItemCustomMoves sTrainerMons_LeaderGiovanni[] = {
     {
-        .lvl = 50,
+        .lvl = 53,
         .species = SPECIES_CLOYSTER,
         .heldItem = ITEM_FOCUS_BAND,
         .moves = {MOVE_SPIKES, MOVE_RAPID_SPIN, MOVE_ICE_BEAM, MOVE_EXPLOSION},
@@ -4834,44 +4834,44 @@ static const struct TrainerMonItemCustomMoves sTrainerMons_LeaderGiovanni[] = {
         .nature = NATURE_ADAMANT
     },
     {
-        .lvl = 53,
+        .lvl = 56,
         .species = SPECIES_TYRANITAR,
         .heldItem = ITEM_LEFTOVERS,
         .moves = {MOVE_DRAGON_DANCE, MOVE_ROCK_SLIDE, MOVE_BRICK_BREAK, MOVE_EARTHQUAKE},
         .evs = {0, 252, 0, 252, 0, 0},
-        .nature = NATURE_JOLLY
+        .nature = NATURE_JOLLY,
     },
     {
-        .lvl = 50,
+        .lvl = 53,
         .species = SPECIES_DUGTRIO,
         .heldItem = ITEM_LIECHI_BERRY,
         .moves = {MOVE_ENDURE, MOVE_EARTHQUAKE, MOVE_ROCK_SLIDE, MOVE_REVERSAL},
         .evs = {0, 252, 0, 252, 0, 0},
-        .nature = NATURE_ADAMANT
+        .nature = NATURE_JOLLY,
     },
     {
-        .lvl = 51,
+        .lvl = 53,
         .species = SPECIES_NIDOQUEEN,
         .heldItem = ITEM_CHOICE_BAND,
         .moves = {MOVE_SUPERPOWER, MOVE_BRICK_BREAK, MOVE_SLUDGE_BOMB, MOVE_EARTHQUAKE},
         .evs = {0, 252, 0, 252, 0, 0},
-        .nature = NATURE_ADAMANT
+        .nature = NATURE_ADAMANT,
     },
     {
-        .lvl = 52,
+        .lvl = 55,
         .species = SPECIES_CLAYDOL,
         .heldItem = ITEM_LEFTOVERS,
-        .moves = {MOVE_EARTHQUAKE, MOVE_PSYCHIC, MOVE_ICE_BEAM, MOVE_TOXIC},
+        .moves = {MOVE_EARTHQUAKE, MOVE_PSYCHIC, MOVE_RAPID_SPIN, MOVE_TOXIC},
         .evs = {252, 0, 0, 0, 0, 252},
-        .nature = NATURE_CALM
+        .nature = NATURE_CAREFUL,
     },
     {
-        .lvl = 53,
+        .lvl = 56,
         .species = SPECIES_KANGASKHAN,
         .heldItem = ITEM_LEFTOVERS,
-        .moves = {MOVE_BODY_SLAM, MOVE_REST, MOVE_EARTHQUAKE, MOVE_SHADOW_BALL},
+        .moves = {MOVE_DOUBLE_EDGE, MOVE_WISH, MOVE_EARTHQUAKE, MOVE_SHADOW_BALL},
         .evs = {0, 252, 0, 252, 0, 0},
-        .nature = NATURE_JOLLY
+        .nature = NATURE_JOLLY,
     },
 };
 
@@ -6570,20 +6570,28 @@ static const struct TrainerMonItemCustomMoves sTrainerMons_LeaderBlaine[] = {
         .nature = NATURE_TIMID,
     },
     {
-        .lvl = 51,
-        .species = SPECIES_HOUNDOOM,
-        .moves = {MOVE_CRUNCH, MOVE_SOLAR_BEAM, MOVE_SUNNY_DAY, MOVE_FIRE_BLAST},
-        .heldItem = ITEM_LEFTOVERS,
-        .evs = {0, 0, 4, 252, 252, 0},
-        .nature = NATURE_TIMID,
-    },
-    {
-        .lvl = 51,
+        .lvl = 52,
         .species = SPECIES_CHARIZARD,
         .heldItem = ITEM_SALAC_BERRY,
         .moves = {MOVE_BELLY_DRUM, MOVE_EARTHQUAKE, MOVE_ROCK_SLIDE, MOVE_FIRE_BLAST},
         .evs = {0, 252, 0, 136, 120, 0},
         .nature = NATURE_LONELY,
+    },
+    {
+        .lvl = 52,
+        .species = SPECIES_SNORLAX,
+        .heldItem = ITEM_LEFTOVERS,
+        .moves = {MOVE_SELF_DESTRUCT, MOVE_EARTHQUAKE, MOVE_BODY_SLAM, MOVE_SHADOW_BALL},
+        .evs = {92, 200, 164, 0, 0, 52},
+        .nature = NATURE_ADAMANT,
+    },
+    {
+        .lvl = 53,
+        .species = SPECIES_HOUNDOOM,
+        .moves = {MOVE_CRUNCH, MOVE_SOLAR_BEAM, MOVE_SUNNY_DAY, MOVE_FIRE_BLAST},
+        .heldItem = ITEM_LEFTOVERS,
+        .evs = {0, 0, 4, 252, 252, 0},
+        .nature = NATURE_TIMID,
     },
 };
 
