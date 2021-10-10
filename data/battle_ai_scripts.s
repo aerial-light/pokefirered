@@ -441,6 +441,8 @@ AI_CBM_Curse:: @ 81DA26C
 	end
 
 AI_CBM_Spikes:: @ 81DA27D
+	count_alive_pokemon AI_TARGET
+	if_equal 0, Score_Minus10
 	if_side_affecting AI_TARGET, SIDE_STATUS_SPIKES, Score_Minus10
 	end
 
@@ -723,6 +725,7 @@ AI_CheckViability:: @ 81DA445
 	if_effect EFFECT_MEAN_LOOK, AI_CV_Trap
 	if_effect EFFECT_MINIMIZE, AI_CV_EvasionUp
 	if_effect EFFECT_CURSE, AI_CV_Curse
+	if_effect EFFECT_SPIKES, AI_CV_Spikes
 	if_effect EFFECT_PROTECT, AI_CV_Protect
 	if_effect EFFECT_FORESIGHT, AI_CV_Foresight
 	if_effect EFFECT_ENDURE, AI_CV_Endure
@@ -1646,17 +1649,18 @@ AI_CV_VitalThrow_End:: @ 81DAFBC
 	end
 
 AI_CV_Substitute:: @ 81DAFBD
-	if_hp_more_than AI_USER, 90, AI_CV_Substitute4
-	if_hp_more_than AI_USER, 70, AI_CV_Substitute3
-	if_hp_more_than AI_USER, 50, AI_CV_Substitute2
-	if_random_less_than 100, AI_CV_Substitute2
+	get_hold_effect AI_USER
+	if_equal HOLD_EFFECT_ATTACK_UP, goto AI_CV_Substitute2
+	if_equal HOLD_EFFECT_SPEED_UP, goto AI_CV_Substitute2
+	if_equal HOLD_EFFECT_SP_ATTACK_UP, goto AI_CV_Substitute2
+	if_hp_more_than AI_USER, 25, AI_CV_Substitute4
 	score -1
 
 AI_CV_Substitute2:: @ 81DAFDA
-	if_random_less_than 100, AI_CV_Substitute3
-	score -1
+	score +2
+	goto AI_CV_Substitute_End
 
-AI_CV_Substitute3:: @ 81DAFE2
+AI_CV_Substitute3:: @ 81DAFE2 @ Don't call this one
 	if_random_less_than 100, AI_CV_Substitute4
 	score -1
 
@@ -2009,6 +2013,10 @@ AI_CV_Curse4:: @ 81DB2D8
 	score -1
 
 AI_CV_Curse_End:: @ 81DB2E1
+	end
+
+AI_CV_Spikes::
+	score +2
 	end
 
 AI_CV_Protect:: @ 81DB2E2
