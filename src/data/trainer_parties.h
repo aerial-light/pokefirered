@@ -6478,7 +6478,7 @@ static const struct TrainerMonItemCustomMoves sTrainerMons_LeaderErika[] = {
     {
         .lvl = 33,
         .species = SPECIES_SHIFTRY,
-        .heldItem = ITEM_SALAC_BERRY,
+        .heldItem = ITEM_LIECHI_BERRY,
         .moves = {MOVE_ENDURE, MOVE_LEAF_BLADE, MOVE_EXTRASENSORY, MOVE_EXPLOSION},
         .evs = {0, 252, 0, 252, 0, 0},
         .nature = NATURE_NAIVE,

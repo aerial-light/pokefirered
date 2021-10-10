@@ -1669,23 +1669,16 @@ AI_CV_VitalThrow_End:: @ 81DAFBC
 	end
 
 AI_CV_Substitute:: @ 81DAFBD
+	if_hp_more_than AI_USER, 25, AI_CV_Substitute2
+	score -3
+
+AI_CV_Substitute2::
 	get_hold_effect AI_USER
-	if_equal HOLD_EFFECT_ATTACK_UP, AI_CV_Substitute2
-	if_equal HOLD_EFFECT_SPEED_UP, AI_CV_Substitute2
-	if_equal HOLD_EFFECT_SP_ATTACK_UP, AI_CV_Substitute2
-	if_hp_more_than AI_USER, 25, AI_CV_Substitute4
-	score -1
-
-AI_CV_Substitute2:: @ 81DAFDA
-	score +2
-	goto AI_CV_Substitute_End
-
-AI_CV_Substitute3:: @ 81DAFE2 @ Don't call this one
-	if_random_less_than 100, AI_CV_Substitute4
-	score -1
-
-AI_CV_Substitute4:: @ 81DAFEA
-	if_target_faster AI_CV_Substitute_End
+	if_equal HOLD_EFFECT_ATTACK_UP, AI_CV_Substitute3
+	if_equal HOLD_EFFECT_SPEED_UP, AI_CV_Substitute3
+	if_equal HOLD_EFFECT_SP_ATTACK_UP, AI_CV_Substitute3
+	if_has_move_with_effect AI_USER, EFFECT_FOCUS_PUNCH, AI_CV_Substitute4
+@	if_target_faster AI_CV_Substitute_End
 	get_last_used_move AI_TARGET
 	get_move_effect_from_result
 	if_equal EFFECT_SLEEP, AI_CV_Substitute5
@@ -1695,6 +1688,15 @@ AI_CV_Substitute4:: @ 81DAFEA
 	if_equal EFFECT_WILL_O_WISP, AI_CV_Substitute5
 	if_equal EFFECT_CONFUSE, AI_CV_Substitute6
 	if_equal EFFECT_LEECH_SEED, AI_CV_Substitute7
+	goto AI_CV_Substitute_End
+
+AI_CV_Substitute3::
+	score +2
+	goto AI_CV_Substitute_End
+
+AI_CV_Substitute4::
+	if_status AI_TARGET, STATUS1_SLEEP, Score_Plus1
+	score +1
 	goto AI_CV_Substitute_End
 
 AI_CV_Substitute5:: @ 81DB022
