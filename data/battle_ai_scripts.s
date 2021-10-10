@@ -1386,20 +1386,13 @@ AI_CV_Bide_End:: @ 81DAD19
 	end
 
 AI_CV_Roar:: @ 81DAD1A
-	if_stat_level_more_than AI_TARGET, STAT_ATK, 8, AI_CV_Roar2
-	if_stat_level_more_than AI_TARGET, STAT_DEF, 8, AI_CV_Roar2
-	if_stat_level_more_than AI_TARGET, STAT_SPATK, 8, AI_CV_Roar2
-	if_stat_level_more_than AI_TARGET, STAT_SPDEF, 8, AI_CV_Roar2
-	if_stat_level_more_than AI_TARGET, STAT_EVASION, 8, AI_CV_Roar2
-	score -3
-	goto AI_CV_Roar_End
-
-AI_CV_Roar2:: @ 81DAD49
-	if_random_less_than 128, AI_CV_Roar_End
-	score +2
-
-AI_CV_Roar_End:: @ 81DAD51
-	end
+	if_stat_level_more_than AI_TARGET, STAT_ATK, 8, Score_Plus1
+	if_stat_level_more_than AI_TARGET, STAT_DEF, 8, Score_Plus1
+	if_stat_level_more_than AI_TARGET, STAT_SPATK, 8, Score_Plus1
+	if_stat_level_more_than AI_TARGET, STAT_SPDEF, 8, Score_Plus1
+	if_stat_level_more_than AI_TARGET, STAT_EVASION, 8, Score_Plus1
+	if_side_affecting AI_TARGET, SIDE_STATUS_SPIKES, Score_Plus2
+	score -1
 
 AI_CV_Conversion:: @ 81DAD52
 	if_hp_more_than AI_USER, 90, AI_CV_Conversion2
@@ -1677,9 +1670,9 @@ AI_CV_VitalThrow_End:: @ 81DAFBC
 
 AI_CV_Substitute:: @ 81DAFBD
 	get_hold_effect AI_USER
-	if_equal HOLD_EFFECT_ATTACK_UP, goto AI_CV_Substitute2
-	if_equal HOLD_EFFECT_SPEED_UP, goto AI_CV_Substitute2
-	if_equal HOLD_EFFECT_SP_ATTACK_UP, goto AI_CV_Substitute2
+	if_equal HOLD_EFFECT_ATTACK_UP, AI_CV_Substitute2
+	if_equal HOLD_EFFECT_SPEED_UP, AI_CV_Substitute2
+	if_equal HOLD_EFFECT_SP_ATTACK_UP, AI_CV_Substitute2
 	if_hp_more_than AI_USER, 25, AI_CV_Substitute4
 	score -1
 
