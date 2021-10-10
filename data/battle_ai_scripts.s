@@ -166,6 +166,7 @@ AI_CheckBadMove_CheckEffect:: @ 81D9D27
 	if_effect EFFECT_FORESIGHT, AI_CBM_Foresight
 	if_effect EFFECT_PERISH_SONG, AI_CBM_PerishSong
 	if_effect EFFECT_SANDSTORM, AI_CBM_Sandstorm
+	if_effect EFFECT_ENDURE, AI_CBM_Endure
 	if_effect EFFECT_SWAGGER, AI_CBM_Confuse
 	if_effect EFFECT_ATTRACT, AI_CBM_Attract
 	if_effect EFFECT_RETURN, AI_CBM_HighRiskForDamage
@@ -457,6 +458,33 @@ AI_CBM_PerishSong:: @ 81DA293
 AI_CBM_Sandstorm:: @ 81DA29E
 	get_weather
 	if_equal AI_WEATHER_SANDSTORM, Score_Minus8
+	end
+
+AI_CBM_Endure::
+	get_weather
+	if_equal AI_WEATHER_SANDSTORM, AI_CBM_Endure_Sandstorm
+	if_equal AI_WEATHER_HAIL, AI_CBM_Endure_Hail
+	end
+
+AI_CBM_Endure_Hail::
+	get_user_type1
+	if_equal TYPE_ICE, AI_CBM_Endure_End
+	get_user_type2
+	if_equal TYPE_ICE, AI_CBM_Endure_End
+	goto Score_Minus10
+
+AI_CBM_Endure_Sandstorm::
+	get_user_type1
+	if_equal TYPE_GROUND, AI_CBM_Endure_End
+	if_equal TYPE_ROCK, AI_CBM_Endure_End
+	if_equal TYPE_STEEL, AI_CBM_Endure_End
+	get_user_type2
+	if_equal TYPE_GROUND, AI_CBM_Endure_End
+	if_equal TYPE_ROCK, AI_CBM_Endure_End
+	if_equal TYPE_STEEL, AI_CBM_Endure_End
+	goto Score_Minus10
+
+AI_CBM_Endure_End::
 	end
 
 AI_CBM_Attract:: @ 81DA2A6
@@ -1529,8 +1557,7 @@ AI_CV_Trap:: @ 81DAEB5
 	goto AI_CV_Trap_End
 
 AI_CV_Trap2:: @ 81DAEE2
-	if_random_less_than 128, AI_CV_Trap_End
-	score +1
+	score +3
 
 AI_CV_Trap_End:: @ 81DAEEA
 	end
@@ -2087,16 +2114,20 @@ AI_CV_Foresight_End:: @ 81DB3D0
 	end
 
 AI_CV_Endure:: @ 81DB3D1
-	if_hp_less_than AI_USER, 4, AI_CV_Endure2
-	if_hp_less_than AI_USER, 35, AI_CV_Endure3
+	if_equal HOLD_EFFECT_ATTACK_UP, AI_CV_Endure3
+	if_equal HOLD_EFFECT_SPEED_UP, AI_CV_Endure3
+	if_equal HOLD_EFFECT_SP_ATTACK_UP, AI_CV_Endure3
+	goto AI_CV_Endure2
+@	if_hp_less_than AI_USER, 4, AI_CV_Endure2
+@	if_hp_less_than AI_USER, 35, AI_CV_Endure3
 
 AI_CV_Endure2:: @ 81DB3DF
 	score -1
 	goto AI_CV_Endure_End
 
 AI_CV_Endure3:: @ 81DB3E6
-	if_random_less_than 70, AI_CV_Endure_End
 	score +1
+	goto AI_CV_Endure_End
 
 AI_CV_Endure_End:: @ 81DB3EE
 	end
