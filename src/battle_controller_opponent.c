@@ -1409,10 +1409,11 @@ static void OpponentHandleChooseItem(void)
 static void OpponentHandleChoosePokemon(void)
 {
     s32 chosenMonId;
+    s16 bestAdv;
 
     if (*(gBattleStruct->AI_monToSwitchIntoId + (GetBattlerPosition(gActiveBattler) >> 1)) == PARTY_SIZE)
     {
-        chosenMonId = GetMostSuitableMonToSwitchInto();
+        chosenMonId = GetMostSuitableMonToSwitchInto(&bestAdv);
 
         if (chosenMonId == PARTY_SIZE)
         {

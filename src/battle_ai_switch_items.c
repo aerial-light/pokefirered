@@ -2,6 +2,7 @@
 #include "battle.h"
 #include "battle_anim.h"
 #include "battle_controllers.h"
+#include "field_weather.h"
 #include "random.h"
 #include "util.h"
 #include "constants/abilities.h"
@@ -299,11 +300,284 @@ static bool8 FindMonWithFlagsAndSuperEffective(u8 flags, u8 moduloPercent)
     return FALSE;
 }
 
+static void ModulateByTypeEffectiveness(u8 atkType, u8 defType1, u8 defType2, s16 *var)
+{
+    u16 i = 0;
+
+    while (TYPE_EFFECT_ATK_TYPE(i) != TYPE_ENDTABLE)
+    {
+        if (TYPE_EFFECT_ATK_TYPE(i) == TYPE_FORESIGHT)
+        {
+            i += 3;
+            continue;
+        }
+        else if (TYPE_EFFECT_ATK_TYPE(i) == atkType)
+        {
+            // Check type1.
+            if (TYPE_EFFECT_DEF_TYPE(i) == defType1)
+                *var = (*var * TYPE_EFFECT_MULTIPLIER(i)) / 10;
+            // Check type2.
+            if (TYPE_EFFECT_DEF_TYPE(i) == defType2 && defType1 != defType2)
+                *var = (*var * TYPE_EFFECT_MULTIPLIER(i)) / 10;
+        }
+        i += 3;
+    }
+}
+
+// AI add-ons
+#define APPLY_STAT_MOD(var, mon, stat, statIndex)                                   \
+{                                                                                   \
+    (var) = (stat) * (gStatStageRatios)[(mon)->statStages[(statIndex)]][0];         \
+    (var) /= (gStatStageRatios)[(mon)->statStages[(statIndex)]][1];                 \
+}
+
+static s16 ComputeAdvantage()
+{
+    u8 side;
+    u8 i, j;
+    s16 advantage;
+    u8 numTurnsToKO, numTurnsToBeKOed;
+    s16 averageDamage;
+    u16 attackerSpeed, targetSpeed;
+    u8 attacker;
+
+    attacker = gActiveBattler;
+    side = GetBattlerSide(gActiveBattler);
+    advantage = 0;
+    numTurnsToKO = numTurnsToBeKOed = 100;
+    for (i = 0; i < gBattlersCount; ++i)
+    {
+        if (GetBattlerSide(i) == side)
+            continue;
+        for (j = 0; j < MAX_MON_MOVES; ++j)
+        {
+            // Compute expected number of turns to faint target
+            gCurrentMove = gBattleMons[attacker].moves[j];
+            if (gCurrentMove == MOVE_NONE)
+                continue;
+            AI_CalcDmg(attacker, i);
+            averageDamage = gBattleMoveDamage;
+            if (gBattleMons[i].item == ITEM_LEFTOVERS)
+                averageDamage = averageDamage - (gBattleMons[i].maxHP / 16);
+            if (GetCurrentWeather() == WEATHER_SANDSTORM_ANY
+             && gBattleMons[i].type1 != TYPE_GROUND && gBattleMons[i].type2 != TYPE_GROUND
+             && gBattleMons[i].type1 != TYPE_ROCK && gBattleMons[i].type2 != TYPE_ROCK
+             && gBattleMons[i].type1 != TYPE_STEEL && gBattleMons[i].type2 != TYPE_STEEL)
+                averageDamage = averageDamage + (gBattleMons[i].maxHP / 16);
+            if (GetCurrentWeather() == WEATHER_HAIL_ANY && gBattleMons[i].type1 != TYPE_ICE && gBattleMons[i].type2 != TYPE_ICE)
+                averageDamage = averageDamage + (gBattleMons[i].maxHP / 16);
+            if (averageDamage > 0)
+            {
+                numTurnsToKO = min(numTurnsToKO, min(100, gBattleMons[i].hp / (u16)averageDamage));
+            }
+        }
+        for (j = 0; j < MAX_MON_MOVES; ++j)
+        {
+            // Compute expected number of turns to be fainted by target
+            gCurrentMove = gBattleMons[attacker].moves[j];
+            if (gCurrentMove == MOVE_NONE)
+                continue;
+            AI_CalcDmg(i, attacker);
+            averageDamage = gBattleMoveDamage;
+            if (gBattleMons[gBattlerAttacker].item == ITEM_LEFTOVERS)
+                averageDamage = averageDamage - (gBattleMons[attacker].maxHP / 16);
+            if (GetCurrentWeather() == WEATHER_SANDSTORM_ANY
+             && gBattleMons[attacker].type1 != TYPE_GROUND && gBattleMons[attacker].type2 != TYPE_GROUND
+             && gBattleMons[attacker].type1 != TYPE_ROCK && gBattleMons[attacker].type2 != TYPE_ROCK
+             && gBattleMons[attacker].type1 != TYPE_STEEL && gBattleMons[attacker].type2 != TYPE_STEEL)
+                averageDamage = averageDamage + (gBattleMons[attacker].maxHP / 16);
+            if (GetCurrentWeather() == WEATHER_HAIL_ANY && gBattleMons[attacker].type1 != TYPE_ICE && gBattleMons[attacker].type2 != TYPE_ICE)
+                averageDamage = averageDamage + (gBattleMons[attacker].maxHP / 16);
+            if (averageDamage > 0)
+            {
+                numTurnsToBeKOed = min(numTurnsToBeKOed, min(100, gBattleMons[attacker].hp / averageDamage));
+            }
+        }
+        advantage = numTurnsToBeKOed - numTurnsToKO;
+        APPLY_STAT_MOD(attackerSpeed, &gBattleMons[attacker], gBattleMons[attacker].speed, STAT_SPEED);
+        APPLY_STAT_MOD(targetSpeed, &gBattleMons[i], gBattleMons[i].speed, STAT_SPEED);
+        if (attackerSpeed > targetSpeed)
+            advantage += 1;
+        if (advantage > 0)
+            break; // Just need one advantage in any matchup
+    }
+    return advantage;
+}
+
+static s16 calcDamageAgainstActiveBattler(struct Pokemon *attacker, struct BattlePokemon *defender, u16 move) {
+    u16 atk, def;
+    s16 simpleDamage;
+    u8 type1, type2;
+    u16 species;
+
+    species = defender->species;
+    type1 = defender->type1;
+    type2 = defender->type2;
+
+    if (move == MOVE_SEISMIC_TOSS || move == MOVE_NIGHT_SHADE)
+    {
+        simpleDamage = attacker->level;
+        if (move == MOVE_SEISMIC_TOSS && (type1 == TYPE_GHOST || type2 == TYPE_GHOST))
+        {
+            return 0;
+        }
+        if (move == MOVE_NIGHT_SHADE && (type1 == TYPE_NORMAL || type2 == TYPE_NORMAL))
+        {
+            return 0;
+        }
+        return simpleDamage;
+    }
+    if (move == MOVE_SONIC_BOOM) return 20;
+    if (move == MOVE_DRAGON_RAGE) return 40;
+
+    if (IS_TYPE_PHYSICAL(gBattleMoves[move].type))
+    {
+        atk = GetMonData(attacker, MON_DATA_ATK2);
+        if (attacker->status & STATUS1_BURN)
+        {
+            if (GetMonData(attacker, MON_DATA_ABILITY_NUM) == ABILITY_GUTS)
+            {
+                atk = atk * 3 / 2;
+            }
+            else
+            {
+                atk /= 2;
+            }
+        }
+        APPLY_STAT_MOD(def, defender, defender->defense, STAT_DEF);
+    } else {
+        atk = GetMonData(attacker, MON_DATA_DEF2);
+        APPLY_STAT_MOD(def, defender, defender->spDefense, STAT_DEF);
+    }
+    simpleDamage = gBattleMoves[move].power * (2 * attacker->level / 5 + 2) / (50 * def);
+    ModulateByTypeEffectiveness(gBattleMoves[move].type, type1, type2, &simpleDamage);
+    return simpleDamage;
+}
+
+static s16 calcDamageFromActiveBattler(struct BattlePokemon *attacker, struct Pokemon *defender, u16 move) {
+    u16 atk, def;
+    s16 simpleDamage;
+    u8 type1, type2;
+    u16 species;
+
+    species = GetMonData(defender, MON_DATA_SPECIES);
+    type1 = gBaseStats[species].type1;
+    type2 = gBaseStats[species].type2;
+
+    if (move == MOVE_SEISMIC_TOSS || move == MOVE_NIGHT_SHADE)
+    {
+        simpleDamage = attacker->level;
+        if (move == MOVE_SEISMIC_TOSS && (type1 == TYPE_GHOST || type2 == TYPE_GHOST))
+        {
+            return 0;
+        }
+        if (move == MOVE_NIGHT_SHADE && (type1 == TYPE_NORMAL || type2 == TYPE_NORMAL))
+        {
+            return 0;
+        }
+        return simpleDamage;
+    }
+    if (move == MOVE_SONIC_BOOM) return 20;
+    if (move == MOVE_DRAGON_RAGE) return 40;
+
+    if (IS_TYPE_PHYSICAL(gBattleMoves[move].type))
+    {
+        def = GetMonData(attacker, MON_DATA_DEF2);
+        APPLY_STAT_MOD(atk, attacker, attacker->attack, STAT_ATK);
+        if (attacker->status1 & STATUS1_BURN)
+        {
+            if (attacker->ability == ABILITY_GUTS)
+            {
+                atk = atk * 3 / 2;
+            }
+            else
+            {
+                atk /= 2;
+            }
+        }
+    } else {
+        def = GetMonData(attacker, MON_DATA_SPDEF2);
+        APPLY_STAT_MOD(atk, attacker, attacker->spAttack, STAT_SPATK);
+    }
+    simpleDamage = gBattleMoves[move].power * (2 * attacker->level / 5 + 2) / (50 * def);
+    ModulateByTypeEffectiveness(gBattleMoves[move].type, type1, type2, &simpleDamage);
+    return simpleDamage;
+}
+
+static s16 ComputeInactiveAdvantage(u8 opposingBattler, u8 slot)
+{
+    u8 side;
+    u8 i;
+    s16 advantage;
+    u8 numTurnsToKO, numTurnsToBeKOed;
+    s16 averageDamage;
+    u16 activeBattleSpeed;
+    u16 currentMove;
+    u16 species;
+    u16 hp;
+
+    advantage = 0;
+    numTurnsToKO = numTurnsToBeKOed = 100;
+    hp = gEnemyParty[slot].hp;
+
+    species = GetMonData(&gEnemyParty[slot], MON_DATA_SPECIES);
+    for (i = 0; i < MAX_MON_MOVES; ++i)
+    {
+        // Compute expected number of turns to faint target
+        currentMove = GetMonData(&gEnemyParty[slot], MON_DATA_MOVE1 + i);
+        if (currentMove == MOVE_NONE)
+            continue;
+        averageDamage = calcDamageAgainstActiveBattler(&gEnemyParty[slot], &gBattleMons[opposingBattler], currentMove);
+        averageDamage = 50;
+        if (gBattleMons[opposingBattler].item == ITEM_LEFTOVERS)
+            averageDamage = averageDamage - (gBattleMons[opposingBattler].maxHP / 16);
+        if (GetCurrentWeather() == WEATHER_SANDSTORM_ANY
+            && gBattleMons[opposingBattler].type1 != TYPE_GROUND && gBattleMons[opposingBattler].type2 != TYPE_GROUND
+            && gBattleMons[opposingBattler].type1 != TYPE_ROCK && gBattleMons[opposingBattler].type2 != TYPE_ROCK
+            && gBattleMons[opposingBattler].type1 != TYPE_STEEL && gBattleMons[opposingBattler].type2 != TYPE_STEEL)
+            averageDamage = averageDamage + (gBattleMons[opposingBattler].maxHP / 16);
+        if (GetCurrentWeather() == WEATHER_HAIL_ANY && gBattleMons[opposingBattler].type1 != TYPE_ICE && gBattleMons[opposingBattler].type2 != TYPE_ICE)
+            averageDamage = averageDamage + (gBattleMons[opposingBattler].maxHP / 16);
+        if (averageDamage > 0)
+        {
+            numTurnsToKO = min(numTurnsToKO, min(100, gBattleMons[opposingBattler].hp / (u16)averageDamage));
+        }
+    }
+    for (i = 0; i < MAX_MON_MOVES; ++i)
+    {
+        // Compute expected number of turns to be fainted by target
+        currentMove = gBattleMons[opposingBattler].moves[i];
+        if (currentMove == MOVE_NONE)
+            continue;
+        // averageDamage = calcDamageFromActiveBattler(&gBattleMons[opposingBattler], &gEnemyParty[slot], currentMove);
+        averageDamage = 50;
+        if (GetMonData(&gEnemyParty[slot], MON_DATA_HELD_ITEM) == ITEM_LEFTOVERS)
+            averageDamage = averageDamage - (GetMonData(&gEnemyParty[slot], MON_DATA_MAX_HP) / 16);
+        if (GetCurrentWeather() == WEATHER_SANDSTORM_ANY
+            && gBaseStats[species].type1 != TYPE_GROUND && gBaseStats[species].type2 != TYPE_GROUND
+            && gBaseStats[species].type1 != TYPE_ROCK && gBaseStats[species].type2 != TYPE_ROCK
+            && gBaseStats[species].type1 != TYPE_STEEL && gBaseStats[species].type2 != TYPE_STEEL)
+            averageDamage = averageDamage + (gEnemyParty[slot].maxHP / 16);
+        if (GetCurrentWeather() == WEATHER_HAIL_ANY && gBaseStats[species].type1 != TYPE_ICE && gBaseStats[species].type2 != TYPE_ICE)
+            averageDamage = averageDamage + (gEnemyParty[slot].maxHP / 16);
+        if (averageDamage > 0)
+        {
+            numTurnsToBeKOed = min(numTurnsToBeKOed, min(100, hp / averageDamage));
+        }
+    }
+    advantage = numTurnsToKO - numTurnsToBeKOed;
+    APPLY_STAT_MOD(activeBattleSpeed, &gBattleMons[opposingBattler], gBattleMons[opposingBattler].speed, STAT_SPEED);
+    if (gEnemyParty[slot].speed > activeBattleSpeed)
+        advantage += 1;
+
+    return advantage;
+}
+
 static bool8 ShouldSwitch(void)
 {
     u8 battlerIn1, battlerIn2;
-    s32 i;
-    s32 availableToSwitch;
+    u8 i;
+    u8 availableToSwitch;
 
     if ((gBattleMons[gActiveBattler].status2 & (STATUS2_WRAPPED | STATUS2_ESCAPE_PREVENTION))
      || (gStatuses3[gActiveBattler] & STATUS3_ROOTED)
@@ -343,9 +617,16 @@ static bool8 ShouldSwitch(void)
             continue;
         ++availableToSwitch;
     }
-    if (!availableToSwitch)
-        return FALSE;
-    // TODO: Fix the following. We need to compute all matchups vs current opponent, then consider switching utility
+
+    if (availableToSwitch)
+    {
+        *(gBattleStruct->AI_monToSwitchIntoId + (GetBattlerPosition(gActiveBattler) >> 1)) = PARTY_SIZE;
+        return TRUE;
+    }
+    return FALSE;
+
+    // Do not need the following
+    /*
     if (ShouldSwitchIfPerishSong()
      || ShouldSwitchIfWonderGuard()
      || FindMonThatAbsorbsOpponentsMove()
@@ -358,6 +639,7 @@ static bool8 ShouldSwitch(void)
      || FindMonWithFlagsAndSuperEffective(MOVE_RESULT_NOT_VERY_EFFECTIVE, 3))
         return TRUE;
     return FALSE;
+    */
 }
 
 void AI_TrySwitchOrUseItem(void)
@@ -366,12 +648,14 @@ void AI_TrySwitchOrUseItem(void)
 
     if (gBattleTypeFlags & BATTLE_TYPE_TRAINER)
     {
-        if (ShouldSwitch())
+        s16 bestAdv = -1;
+        s16 curAdv = ComputeAdvantage();
+        s32 monToSwitchId = GetMostSuitableMonToSwitchInto(&bestAdv);
+        if (ShouldSwitch() && bestAdv > curAdv)
         {
-            if (*(gBattleStruct->AI_monToSwitchIntoId + (GetBattlerPosition(gActiveBattler) >> 1)) == 6)
+            if (*(gBattleStruct->AI_monToSwitchIntoId + (GetBattlerPosition(gActiveBattler) >> 1)) == PARTY_SIZE)
             {
-                s32 monToSwitchId = GetMostSuitableMonToSwitchInto();
-                if (monToSwitchId == 6)
+                if (monToSwitchId == PARTY_SIZE)
                 {
                     if (!(gBattleTypeFlags & BATTLE_TYPE_DOUBLE))
                     {
@@ -396,6 +680,7 @@ void AI_TrySwitchOrUseItem(void)
                 *(gBattleStruct->AI_monToSwitchIntoId + (GetBattlerPosition(gActiveBattler) >> 1)) = monToSwitchId;
             }
             *(gBattleStruct->monToSwitchIntoId + gActiveBattler) = *(gBattleStruct->AI_monToSwitchIntoId + (GetBattlerPosition(gActiveBattler) >> 1));
+            BtlController_EmitTwoReturnValues(1, B_ACTION_SWITCH, 0);
             return;
         }
         else if (ShouldUseItem())
@@ -406,39 +691,15 @@ void AI_TrySwitchOrUseItem(void)
     BtlController_EmitTwoReturnValues(1, B_ACTION_USE_MOVE, (gActiveBattler ^ BIT_SIDE) << 8);
 }
 
-static void ModulateByTypeEffectiveness(u8 atkType, u8 defType1, u8 defType2, u8 *var)
-{
-    s32 i = 0;
-
-    while (TYPE_EFFECT_ATK_TYPE(i) != TYPE_ENDTABLE)
-    {
-        if (TYPE_EFFECT_ATK_TYPE(i) == TYPE_FORESIGHT)
-        {
-            i += 3;
-            continue;
-        }
-        else if (TYPE_EFFECT_ATK_TYPE(i) == atkType)
-        {
-            // Check type1.
-            if (TYPE_EFFECT_DEF_TYPE(i) == defType1)
-                *var = (*var * TYPE_EFFECT_MULTIPLIER(i)) / 10;
-            // Check type2.
-            if (TYPE_EFFECT_DEF_TYPE(i) == defType2 && defType1 != defType2)
-                *var = (*var * TYPE_EFFECT_MULTIPLIER(i)) / 10;
-        }
-        i += 3;
-    }
-}
-
-u8 GetMostSuitableMonToSwitchInto(void)
+u8 GetMostSuitableMonToSwitchInto(s16 *bestAdv)
 {
     u8 opposingBattler;
-    u8 bestDmg; // Note : should be changed to u32 for obvious reasons.
     u8 bestMonId;
     u8 battlerIn1, battlerIn2;
-    s32 i, j;
-    u8 invalidMons;
+    u8 i;
+    // u8 invalidMons;
     u16 move;
+    s16 advantage;
 
     if (*(gBattleStruct->monToSwitchIntoId + gActiveBattler) != PARTY_SIZE)
         return *(gBattleStruct->monToSwitchIntoId + gActiveBattler);
@@ -460,66 +721,47 @@ u8 GetMostSuitableMonToSwitchInto(void)
         battlerIn1 = gActiveBattler;
         battlerIn2 = gActiveBattler;
     }
-    invalidMons = 0;
-    while (invalidMons != 0x3F) // All mons are invalid.
-    {
-        bestDmg = 0;
-        bestMonId = 6;
-        // Find the mon whose type is the most suitable offensively.
-        for (i = 0; i < PARTY_SIZE; ++i)
-        {
-            u16 species = GetMonData(&gEnemyParty[i], MON_DATA_SPECIES);
-            if (species != SPECIES_NONE
-                && GetMonData(&gEnemyParty[i], MON_DATA_HP) != 0
-                && !(gBitTable[i] & invalidMons)
-                && gBattlerPartyIndexes[battlerIn1] != i
-                && gBattlerPartyIndexes[battlerIn2] != i
-                && i != *(gBattleStruct->monToSwitchIntoId + battlerIn1)
-                && i != *(gBattleStruct->monToSwitchIntoId + battlerIn2))
-            {
-                u8 type1 = gBaseStats[species].type1;
-                u8 type2 = gBaseStats[species].type2;
-                u8 typeDmg = 10;
-                ModulateByTypeEffectiveness(gBattleMons[opposingBattler].type1, type1, type2, &typeDmg);
-                ModulateByTypeEffectiveness(gBattleMons[opposingBattler].type2, type1, type2, &typeDmg);
-                if (bestDmg < typeDmg)
-                {
-                    bestDmg = typeDmg;
-                    bestMonId = i;
-                }
-            }
-            else
-            {
-                invalidMons |= gBitTable[i];
-            }
-        }
-        // Ok, we know the mon has the right typing but does it have at least one super effective move?
-        if (bestMonId != PARTY_SIZE)
-        {
-            for (i = 0; i < MAX_MON_MOVES; ++i)
-            {
-                move = GetMonData(&gEnemyParty[bestMonId], MON_DATA_MOVE1 + i);
-                if (move != MOVE_NONE && TypeCalc(move, gActiveBattler, opposingBattler) & MOVE_RESULT_SUPER_EFFECTIVE)
-                    break;
-            }
-            if (i != MAX_MON_MOVES)
-                return bestMonId; // Has both the typing and at least one super effective move.
 
-            invalidMons |= gBitTable[bestMonId]; // Sorry buddy, we want something better.
-        }
-        else
+    bestMonId = PARTY_SIZE;
+    // Find the mon whose type is the most suitable offensively.
+    for (i = 0; i < PARTY_SIZE; ++i)
+    {
+        u16 species = GetMonData(&gEnemyParty[i], MON_DATA_SPECIES);
+        if (species != SPECIES_NONE
+            && GetMonData(&gEnemyParty[i], MON_DATA_HP) != 0
+            && gBattlerPartyIndexes[battlerIn1] != i
+            && gBattlerPartyIndexes[battlerIn2] != i
+            && i != *(gBattleStruct->monToSwitchIntoId + battlerIn1)
+            && i != *(gBattleStruct->monToSwitchIntoId + battlerIn2))
         {
-            invalidMons = 0x3F; // No viable mon to switch.
+            // Compute advantage instead of type modulation
+            advantage = ComputeInactiveAdvantage(opposingBattler, i);
+            if (*bestAdv < advantage)
+            {
+                *bestAdv = advantage;
+                bestMonId = i;
+            }
         }
     }
-    gDynamicBasePower = 0;
-    gBattleStruct->dynamicMoveType = 0;
-    gBattleScripting.dmgMultiplier = 1;
-    gMoveResultFlags = 0;
-    gCritMultiplier = 1;
-    bestDmg = 0;
-    bestMonId = 6;
+    // Return a valid switching option if our best advantage is non-negative
+    if (bestMonId != PARTY_SIZE && bestAdv >= 0)
+    {
+        return bestMonId;
+    }
+    // else
+    // {
+    //    invalidMons = 0x3F; // No viable mon to switch.
+    // }
+
+    // gDynamicBasePower = 0;
+    // gBattleStruct->dynamicMoveType = 0;
+    // gBattleScripting.dmgMultiplier = 1;
+    // gMoveResultFlags = 0;
+    // gCritMultiplier = 1;
+    // bestDmg = 0;
+    // bestMonId = 6;
     // If we couldn't find the best mon in terms of typing, find the one that deals most damage.
+    /* Actually we do not need to do this either, turn advantage computes that for us
     for (i = 0; i < PARTY_SIZE; ++i)
     {
         if (((u16)(GetMonData(&gEnemyParty[i], MON_DATA_SPECIES)) == SPECIES_NONE)
@@ -545,6 +787,7 @@ u8 GetMostSuitableMonToSwitchInto(void)
             }
         }
     }
+    */
     return bestMonId;
 }
 

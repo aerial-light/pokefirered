@@ -14,6 +14,6 @@ enum
 };
 
 void AI_TrySwitchOrUseItem(void);
-u8 GetMostSuitableMonToSwitchInto(void);
+u8 GetMostSuitableMonToSwitchInto(s16 *bestAdv);
 
 #endif // GUARD_BATTLE_AI_SWITCH_ITEMS_H
