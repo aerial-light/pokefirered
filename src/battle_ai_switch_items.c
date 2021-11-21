@@ -384,6 +384,8 @@ static s16 ComputeAdvantage()
         for (j = 0; j < MAX_MON_MOVES; ++j)
         {
             // Compute expected number of turns to be fainted by target
+            // Note: use max HP here instead of current. Otherwise we will keep switching out when low on HP
+            // The idea is to try to search for a switch-in that's superior to the current setup even at max HP, not at current HP
             gCurrentMove = gBattleMons[gActiveBattler].moves[j];
             if (gCurrentMove == MOVE_NONE)
                 continue;
@@ -400,7 +402,7 @@ static s16 ComputeAdvantage()
                 averageDamage = averageDamage + (gBattleMons[gActiveBattler].maxHP / 16);
             if (averageDamage > 0)
             {
-                numTurnsToBeKOed = min(numTurnsToBeKOed, min(100, 1 + gBattleMons[gActiveBattler].hp / averageDamage));
+                numTurnsToBeKOed = min(numTurnsToBeKOed, min(100, 1 + gBattleMons[gActiveBattler].maxHP / averageDamage));
             }
         }
         if (advantage > numTurnsToBeKOed - numTurnsToKO + 1)
