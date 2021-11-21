@@ -219,6 +219,7 @@ const u8 gText_InBagVar1[] = _("IN BAG:{SMALL} {STR_VAR_1}");
 const u8 gText_QuitShopping[] = _("Quit shopping.");
 const u8 gText_Var1CertainlyHowMany[] = _("{STR_VAR_1}? Certainly.\nHow many would you like?");
 const u8 gText_Var1AndYouWantedVar2[] = _("{STR_VAR_1}, and you want {STR_VAR_2}.\nThat will be ¥{STR_VAR_3}. Okay?");
+const u8 gText_Var1ConfirmPurchase[] = _("{STR_VAR_1}? Certainly.\nThat will be ¥{STR_VAR_2}. Okay?");
 const u8 gUnknown_84167BB[] = _("{STR_VAR_1} だね!\n{STR_VAR_2}¥ だけど かうかい?");
 const u8 gUnknown_84167D0[] = _("{STR_VAR_1} ですね!\n{STR_VAR_2}¥ だけど かいますか?");
 const u8 gText_HereYouGoThankYou[] = _("Here you are!\nThank you!");
