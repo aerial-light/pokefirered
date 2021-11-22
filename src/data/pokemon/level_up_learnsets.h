@@ -1296,10 +1296,10 @@ static const u16 sGastlyLevelUpLearnset[] = {
     LEVEL_UP_MOVE(13, MOVE_CURSE),
     LEVEL_UP_MOVE(16, MOVE_NIGHT_SHADE),
     LEVEL_UP_MOVE(21, MOVE_CONFUSE_RAY),
-    LEVEL_UP_MOVE(28, MOVE_DREAM_EATER),
+    LEVEL_UP_MOVE(28, MOVE_NIGHTMARE),
     LEVEL_UP_MOVE(33, MOVE_DESTINY_BOND),
     LEVEL_UP_MOVE(36, MOVE_SHADOW_BALL),
-    LEVEL_UP_MOVE(41, MOVE_NIGHTMARE),
+    LEVEL_UP_MOVE(41, MOVE_WILL_O_WISP),
     LEVEL_UP_MOVE(48, MOVE_MEAN_LOOK),
     LEVEL_UP_END
 };
@@ -1313,10 +1313,10 @@ static const u16 sHaunterLevelUpLearnset[] = {
     LEVEL_UP_MOVE(16, MOVE_NIGHT_SHADE),
     LEVEL_UP_MOVE(21, MOVE_CONFUSE_RAY),
     LEVEL_UP_MOVE(25, MOVE_SHADOW_PUNCH),
-    LEVEL_UP_MOVE(31, MOVE_DREAM_EATER),
+    LEVEL_UP_MOVE(31, MOVE_NIGHTMARE),
     LEVEL_UP_MOVE(39, MOVE_DESTINY_BOND),
     LEVEL_UP_MOVE(45, MOVE_SHADOW_BALL),
-    LEVEL_UP_MOVE(53, MOVE_NIGHTMARE),
+    LEVEL_UP_MOVE(53, MOVE_WILL_O_WISP),
     LEVEL_UP_MOVE(64, MOVE_MEAN_LOOK),
     LEVEL_UP_END
 };
@@ -1330,10 +1330,10 @@ static const u16 sGengarLevelUpLearnset[] = {
     LEVEL_UP_MOVE(16, MOVE_NIGHT_SHADE),
     LEVEL_UP_MOVE(21, MOVE_CONFUSE_RAY),
     LEVEL_UP_MOVE(25, MOVE_SHADOW_PUNCH),
-    LEVEL_UP_MOVE(31, MOVE_DREAM_EATER),
+    LEVEL_UP_MOVE(31, MOVE_NIGHTMARE),
     LEVEL_UP_MOVE(39, MOVE_DESTINY_BOND),
     LEVEL_UP_MOVE(45, MOVE_SHADOW_BALL),
-    LEVEL_UP_MOVE(53, MOVE_NIGHTMARE),
+    LEVEL_UP_MOVE(53, MOVE_WILL_O_WISP),
     LEVEL_UP_MOVE(64, MOVE_MEAN_LOOK),
     LEVEL_UP_END
 };
@@ -1624,6 +1624,7 @@ static const u16 sRhydonLevelUpLearnset[] = {
 };
 
 static const u16 sChanseyLevelUpLearnset[] = {
+    LEVEL_UP_MOVE(1, MOVE_WISH),
     LEVEL_UP_MOVE(1, MOVE_POUND),
     LEVEL_UP_MOVE(1, MOVE_GROWL),
     LEVEL_UP_MOVE(5, MOVE_TAIL_WHIP),
@@ -1909,6 +1910,7 @@ static const u16 sDittoLevelUpLearnset[] = {
 };
 
 static const u16 sEeveeLevelUpLearnset[] = {
+    LEVEL_UP_MOVE(1, MOVE_WISH),
     LEVEL_UP_MOVE(1, MOVE_TACKLE),
     LEVEL_UP_MOVE(1, MOVE_TAIL_WHIP),
     LEVEL_UP_MOVE(1, MOVE_HELPING_HAND),
@@ -1922,6 +1924,8 @@ static const u16 sEeveeLevelUpLearnset[] = {
 };
 
 static const u16 sVaporeonLevelUpLearnset[] = {
+    LEVEL_UP_MOVE(1, MOVE_BATON_PASS),
+    LEVEL_UP_MOVE(1, MOVE_WISH),
     LEVEL_UP_MOVE(1, MOVE_TACKLE),
     LEVEL_UP_MOVE(1, MOVE_TAIL_WHIP),
     LEVEL_UP_MOVE(1, MOVE_HELPING_HAND),
@@ -1937,6 +1941,8 @@ static const u16 sVaporeonLevelUpLearnset[] = {
 };
 
 static const u16 sJolteonLevelUpLearnset[] = {
+    LEVEL_UP_MOVE(1, MOVE_BATON_PASS),
+    LEVEL_UP_MOVE(1, MOVE_WISH),
     LEVEL_UP_MOVE(1, MOVE_TACKLE),
     LEVEL_UP_MOVE(1, MOVE_TAIL_WHIP),
     LEVEL_UP_MOVE(1, MOVE_HELPING_HAND),
@@ -1952,6 +1958,8 @@ static const u16 sJolteonLevelUpLearnset[] = {
 };
 
 static const u16 sFlareonLevelUpLearnset[] = {
+    LEVEL_UP_MOVE(1, MOVE_BATON_PASS),
+    LEVEL_UP_MOVE(1, MOVE_WISH),
     LEVEL_UP_MOVE(1, MOVE_TACKLE),
     LEVEL_UP_MOVE(1, MOVE_TAIL_WHIP),
     LEVEL_UP_MOVE(1, MOVE_HELPING_HAND),
@@ -2072,6 +2080,7 @@ static const u16 sSnorlaxLevelUpLearnset[] = {
     LEVEL_UP_MOVE(49, MOVE_ROLLOUT),
     LEVEL_UP_MOVE(53, MOVE_CURSE),
     LEVEL_UP_MOVE(57, MOVE_HYPER_BEAM),
+    LEVEL_UP_MOVE(61, MOVE_SELF_DESTRUCT),
     LEVEL_UP_END
 };
 
@@ -2800,6 +2809,8 @@ static const u16 sQuagsireLevelUpLearnset[] = {
 };
 
 static const u16 sEspeonLevelUpLearnset[] = {
+    LEVEL_UP_MOVE(1, MOVE_BATON_PASS),
+    LEVEL_UP_MOVE(1, MOVE_WISH),
     LEVEL_UP_MOVE(1, MOVE_TACKLE),
     LEVEL_UP_MOVE(1, MOVE_TAIL_WHIP),
     LEVEL_UP_MOVE(1, MOVE_HELPING_HAND),
@@ -2815,6 +2826,8 @@ static const u16 sEspeonLevelUpLearnset[] = {
 };
 
 static const u16 sUmbreonLevelUpLearnset[] = {
+    LEVEL_UP_MOVE(1, MOVE_BATON_PASS),
+    LEVEL_UP_MOVE(1, MOVE_WISH),
     LEVEL_UP_MOVE(1, MOVE_TACKLE),
     LEVEL_UP_MOVE(1, MOVE_TAIL_WHIP),
     LEVEL_UP_MOVE(1, MOVE_HELPING_HAND),
@@ -3416,6 +3429,7 @@ static const u16 sMiltankLevelUpLearnset[] = {
 };
 
 static const u16 sBlisseyLevelUpLearnset[] = {
+    LEVEL_UP_MOVE(1, MOVE_WISH),
     LEVEL_UP_MOVE(1, MOVE_POUND),
     LEVEL_UP_MOVE(1, MOVE_GROWL),
     LEVEL_UP_MOVE(4, MOVE_TAIL_WHIP),
