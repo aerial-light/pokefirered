@@ -831,6 +831,7 @@ AI_CV_Absorb_End:: @ 81DA751
 	end
 
 AI_CV_SelfKO:: @ 81DA752
+	score +2
 	if_stat_level_less_than AI_TARGET, STAT_EVASION, 7, AI_CV_SelfKO_Encourage1
 	score -1
 	if_stat_level_less_than AI_TARGET, STAT_EVASION, 10, AI_CV_SelfKO_Encourage1
@@ -850,8 +851,7 @@ AI_CV_SelfKO_Encourage2:: @ 81DA784
 
 AI_CV_SelfKO_Encourage3:: @ 81DA793
 	if_hp_more_than AI_USER, 30, AI_CV_SelfKO_End
-	if_random_less_than 50, AI_CV_SelfKO_End
-	score +1
+	score +2
 	goto AI_CV_SelfKO_End
 
 AI_CV_SelfKO_Encourage4:: @ 81DA7A7
