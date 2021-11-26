@@ -422,7 +422,6 @@ static s16 calcDamageAgainstActiveBattler(struct Pokemon *attacker, struct Battl
     u8 type1, type2;
     u16 species;
 
-    species = defender->species;
     type1 = defender->type1;
     type2 = defender->type2;
 
@@ -441,6 +440,14 @@ static s16 calcDamageAgainstActiveBattler(struct Pokemon *attacker, struct Battl
     }
     if (move == MOVE_SONIC_BOOM) return 20;
     if (move == MOVE_DRAGON_RAGE) return 40;
+    if (gBattleMoves[move].type == TYPE_WATER && defender->ability == ABILITY_WATER_ABSORB)
+        return 0;
+    if (gBattleMoves[move].type == TYPE_ELECTRIC && defender->ability == ABILITY_VOLT_ABSORB)
+        return 0;
+    if (gBattleMoves[move].type == TYPE_GROUND && defender->ability == ABILITY_LEVITATE)
+        return 0;
+    if (gBattleMoves[move].type == TYPE_FIRE && defender->ability == ABILITY_FLASH_FIRE)
+        return 0;
 
     if (IS_TYPE_PHYSICAL(gBattleMoves[move].type))
     {
@@ -462,7 +469,11 @@ static s16 calcDamageAgainstActiveBattler(struct Pokemon *attacker, struct Battl
             def = def * 3 / 2;
         }
     }
-    simpleDamage = gBattleMoves[move].power * (2 * attacker->level / 5 + 2) / (50 * def);
+    simpleDamage = atk * gBattleMoves[move].power * (2 * attacker->level / 5 + 2) / (50 * def);
+
+    species = GetMonData(attacker, MON_DATA_SPECIES);
+    if (gBattleMoves[move].type == gBaseStats[species].type1 || gBattleMoves[move].type == gBaseStats[species].type2)
+        simpleDamage = simpleDamage * 3 / 2;
     ModulateByTypeEffectiveness(gBattleMoves[move].type, type1, type2, &simpleDamage);
     return simpleDamage;
 }
@@ -492,6 +503,14 @@ static s16 calcDamageFromActiveBattler(struct BattlePokemon *attacker, struct Po
     }
     if (move == MOVE_SONIC_BOOM) return 20;
     if (move == MOVE_DRAGON_RAGE) return 40;
+    if (gBattleMoves[move].type == TYPE_WATER && gBaseStats[species].abilities[GetMonData(defender, MON_DATA_ABILITY_NUM)] == ABILITY_WATER_ABSORB)
+        return 0;
+    if (gBattleMoves[move].type == TYPE_ELECTRIC && gBaseStats[species].abilities[GetMonData(defender, MON_DATA_ABILITY_NUM)] == ABILITY_VOLT_ABSORB)
+        return 0;
+    if (gBattleMoves[move].type == TYPE_GROUND && gBaseStats[species].abilities[GetMonData(defender, MON_DATA_ABILITY_NUM)] == ABILITY_LEVITATE)
+        return 0;
+    if (gBattleMoves[move].type == TYPE_FIRE && gBaseStats[species].abilities[GetMonData(defender, MON_DATA_ABILITY_NUM)] == ABILITY_FLASH_FIRE)
+        return 0;
 
     if (IS_TYPE_PHYSICAL(gBattleMoves[move].type))
     {
@@ -513,7 +532,9 @@ static s16 calcDamageFromActiveBattler(struct BattlePokemon *attacker, struct Po
         }
         APPLY_STAT_MOD(atk, attacker, attacker->spAttack, STAT_SPATK);
     }
-    simpleDamage = gBattleMoves[move].power * (2 * attacker->level / 5 + 2) / (50 * def);
+    simpleDamage = atk * gBattleMoves[move].power * (2 * attacker->level / 5 + 2) / (50 * def);
+    if (gBattleMoves[move].type == attacker->type1 || gBattleMoves[move].type == attacker->type2)
+        simpleDamage = simpleDamage * 3 / 2;
     ModulateByTypeEffectiveness(gBattleMoves[move].type, type1, type2, &simpleDamage);
     return simpleDamage;
 }
@@ -551,7 +572,7 @@ static s16 ComputeInactiveAdvantage(u8 opposingBattler, u8 slot)
             averageDamage = averageDamage + (gBattleMons[opposingBattler].maxHP / 16);
         if (averageDamage > 0)
         {
-            numTurnsToKO = min(numTurnsToKO, min(100, 1 + gBattleMons[opposingBattler].hp / (u16)averageDamage));
+            numTurnsToKO = min(numTurnsToKO, 1 + gBattleMons[opposingBattler].hp / (u16)averageDamage);
         }
     }
     for (i = 0; i < MAX_MON_MOVES; ++i)
@@ -572,7 +593,7 @@ static s16 ComputeInactiveAdvantage(u8 opposingBattler, u8 slot)
             averageDamage = averageDamage + (gEnemyParty[slot].maxHP / 16);
         if (averageDamage > 0)
         {
-            numTurnsToBeKOed = min(numTurnsToBeKOed, min(100, gEnemyParty[slot].hp / averageDamage)); // subtract 1 to account for switch in
+            numTurnsToBeKOed = min(numTurnsToBeKOed, gEnemyParty[slot].hp / averageDamage); // subtract 1 to account for switch in
         }
     }
     advantage = numTurnsToBeKOed - numTurnsToKO;
