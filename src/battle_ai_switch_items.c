@@ -367,6 +367,8 @@ static s16 ComputeAdvantage()
                 continue;
             AI_CalcDmg(gActiveBattler, i);
             averageDamage = gBattleMoveDamage;
+            if (averageDamage <= 0)
+                continue;
             if (gBattleMons[i].item == ITEM_LEFTOVERS)
                 averageDamage = averageDamage - (gBattleMons[i].maxHP / 16);
             if (GetCurrentWeather() == WEATHER_SANDSTORM_ANY
@@ -391,6 +393,8 @@ static s16 ComputeAdvantage()
                 continue;
             AI_CalcDmg(i, gActiveBattler);
             averageDamage = gBattleMoveDamage;
+            if (averageDamage <= 0)
+                continue;
             if (gBattleMons[gActiveBattler].item == ITEM_LEFTOVERS)
                 averageDamage = averageDamage - (gBattleMons[gActiveBattler].maxHP / 16);
             if (GetCurrentWeather() == WEATHER_SANDSTORM_ANY
@@ -440,6 +444,8 @@ static s16 calcDamageAgainstActiveBattler(struct Pokemon *attacker, struct Battl
     }
     if (move == MOVE_SONIC_BOOM) return 20;
     if (move == MOVE_DRAGON_RAGE) return 40;
+    if (gBattleMoves[move].power == 0) return 0; // End of checks, just return 0 here
+
     if (gBattleMoves[move].type == TYPE_WATER && defender->ability == ABILITY_WATER_ABSORB)
         return 0;
     if (gBattleMoves[move].type == TYPE_ELECTRIC && defender->ability == ABILITY_VOLT_ABSORB)
