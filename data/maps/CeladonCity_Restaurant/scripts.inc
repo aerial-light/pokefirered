@@ -52,6 +52,8 @@ Text_HowMayIServeYou::
 	.string "What would you like for today?$"
 
 CeladonCity_Restaurant_Items::
+	.2byte ITEM_LUM_BERRY
+	.2byte ITEM_SITRUS_BERRY
 	.2byte ITEM_POMEG_BERRY
 	.2byte ITEM_KELPSY_BERRY
 	.2byte ITEM_QUALOT_BERRY
