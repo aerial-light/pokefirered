@@ -106,3 +106,11 @@ void IsSelectedMonEgg(void)
     else
         gSpecialVar_Result = FALSE;
 }
+
+void ChangeNature(void)
+{
+    u8 nature;
+    nature = gSpecialVar_0x8005 * 5 + gSpecialVar_0x8006;
+    SetMonData(&gPlayerParty[gSpecialVar_0x8004], MON_DATA_NATURE, &nature);
+    CalculateMonStats(&gPlayerParty[gSpecialVar_0x8004]);
+}

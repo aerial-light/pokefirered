@@ -311,6 +311,14 @@ static const struct MenuAction sScriptMultiChoiceMenu_BikeShop[] = {
     { gText_NoThanks }
 };
 
+static const struct MenuAction sScriptMultiChoiceMenu_NatureStatToModify[] = {
+    { gText_Modify_Attack },
+    { gText_Modify_Defense },
+    { gText_Modify_Speed },
+    { gText_Modify_SpAtk },
+    { gText_Modify_SpDef }
+};
+
 static const struct MenuAction sScriptMultiChoiceMenu_GameCornerPokemonPrizes[] = {
     { gText_Abra_180Coins },
     { gText_Pinsir_2500Coins },
@@ -498,7 +506,7 @@ const struct MultichoiceListStruct gScriptMultiChoiceMenus[] = {
     { sScriptMultiChoiceMenu_HOF_Eggs_Victories_Quit,  NELEMS(sScriptMultiChoiceMenu_HOF_Eggs_Victories_Quit)  },
     { sScriptMultiChoiceMenu_Exit, NELEMS(sScriptMultiChoiceMenu_Exit) },
     { sScriptMultiChoiceMenu_Exit, NELEMS(sScriptMultiChoiceMenu_Exit) },
-    { sScriptMultiChoiceMenu_Exit, NELEMS(sScriptMultiChoiceMenu_Exit) },
+    { sScriptMultiChoiceMenu_NatureStatToModify, NELEMS(sScriptMultiChoiceMenu_NatureStatToModify) },
     { sScriptMultiChoiceMenu_BikeShop, NELEMS(sScriptMultiChoiceMenu_BikeShop) },
     { sScriptMultiChoiceMenu_GameCornerPokemonPrizes, NELEMS(sScriptMultiChoiceMenu_GameCornerPokemonPrizes) },
     { sScriptMultiChoiceMenu_TrainerSchoolWhiteboard, NELEMS(sScriptMultiChoiceMenu_TrainerSchoolWhiteboard) },

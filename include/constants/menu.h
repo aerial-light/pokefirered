@@ -16,7 +16,7 @@
 #define MULTICHOICE_HOF_EGGS_VICTORIES_QUIT                     9
 #define MULTICHOICE_EXIT                                       10
 #define MULTICHOICE_EXIT_2                                     11
-#define MULTICHOICE_EXIT_3                                     12
+#define MULTICHOICE_NATURE_STAT_TO_MODIFY                      12
 #define MULTICHOICE_BIKE_SHOP                                  13
 #define MULTICHOICE_GAME_CORNER_POKEMON_PRIZES                 14
 #define MULTICHOICE_TRAINER_SCHOOL_WHITEBOARD                  15

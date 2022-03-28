@@ -1,10 +1,6 @@
 CinnabarIsland_PokemonLab_Lounge_MapScripts:: @ 816E2B8
 	.byte 0
 
-CinnabarIsland_PokemonLab_Lounge_EventScript_Scientist:: @ 816E2B9
-	msgbox CinnabarIsland_PokemonLab_Lounge_Text_FoundFossilInMtMoon, MSGBOX_NPC
-	end
-
 CinnabarIsland_PokemonLab_Lounge_EventScript_Clifton:: @ 816E2C2
 	lock
 	faceplayer
@@ -86,5 +82,47 @@ CinnabarIsland_PokemonLab_Lounge_EventScript_NormaNotRequestedMon:: @ 816E3C6
 
 CinnabarIsland_PokemonLab_Lounge_EventScript_NormaAlreadyTraded:: @ 816E3D4
 	msgbox Trade_Text_HowIsMyOldMon
+	release
+	end
+
+CinnabarIsland_PokemonLab_Lounge_EventScript_Scientist::
+	lock
+	faceplayer
+	msgbox CinnabarIsland_PokemonLab_Lounge_Text_WouldYouLikeToChangeNature, MSGBOX_YESNO
+	compare VAR_RESULT, YES
+	goto_if_eq CinnabarIsland_PokemonLab_Lounge_EventScript_ChooseMonForNatureChange
+	goto CinnabarIsland_PokemonLab_Lounge_EventScript_CancelNatureChange
+	end
+
+CinnabarIsland_PokemonLab_Lounge_EventScript_ChooseMonForNatureChange::
+	msgbox CinnabarIsland_PokemonLab_Lounge_Text_WhichMonShouldChangeNature
+	special ChoosePartyMon
+	waitstate
+	compare VAR_0x8004, PARTY_SIZE
+	goto_if_ge CinnabarIsland_PokemonLab_Lounge_EventScript_CancelNatureChange
+	special IsSelectedMonEgg
+	compare VAR_RESULT, TRUE
+	goto_if_eq CinnabarIsland_PokemonLab_Lounge_EventScript_CantChangeNatureEgg
+	msgbox CinnabarIsland_PokemonLab_Lounge_Text_IncreaseWhichStat
+	multichoice 0, 0, MULTICHOICE_NATURE_STAT_TO_MODIFY, FALSE
+	copyvar 0x8005, VAR_RESULT
+	msgbox CinnabarIsland_PokemonLab_Lounge_Text_DecreaseWhichStat
+	multichoice 0, 0, MULTICHOICE_NATURE_STAT_TO_MODIFY, FALSE
+	copyvar 0x8006, VAR_RESULT
+	msgbox CinnabarIsland_PokemonLab_Lounge_Text_ConfirmNatureChange, MSGBOX_YESNO
+	compare VAR_RESULT, NO
+	goto_if_eq CinnabarIsland_PokemonLab_Lounge_EventScript_CancelNatureChange
+	special ChangeNature
+	msgbox CinnabarIsland_PokemonLab_Lounge_Text_NatureChangeSuccessful
+	release
+	end
+
+CinnabarIsland_PokemonLab_Lounge_EventScript_CancelNatureChange::
+	msgbox CinnabarIsland_PokemonLab_Lounge_Text_CancelNatureChange
+	release
+	end
+
+CinnabarIsland_PokemonLab_Lounge_EventScript_CantChangeNatureEgg::
+	msgbox CinnabarIsland_PokemonLab_Lounge_Text_CantChangeNatureEgg
 	release
 	end
