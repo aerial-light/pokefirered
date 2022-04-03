@@ -4557,6 +4557,93 @@ void ItemUseCB_MedicineStep(u8 taskId, TaskFunc func)
     }
 }
 
+static u16 ItemEffectToMonEv(struct Pokemon *mon, u8 effectType)
+{
+    switch (effectType)
+    {
+    case ITEM_EFFECT_HP_EV:
+        if (GetMonData(mon, MON_DATA_SPECIES) != SPECIES_SHEDINJA)
+            return GetMonData(mon, MON_DATA_HP_EV);
+        break;
+    case ITEM_EFFECT_ATK_EV:
+        return GetMonData(mon, MON_DATA_ATK_EV);
+    case ITEM_EFFECT_DEF_EV:
+        return GetMonData(mon, MON_DATA_DEF_EV);
+    case ITEM_EFFECT_SPEED_EV:
+        return GetMonData(mon, MON_DATA_SPEED_EV);
+    case ITEM_EFFECT_SPATK_EV:
+        return GetMonData(mon, MON_DATA_SPATK_EV);
+    case ITEM_EFFECT_SPDEF_EV:
+        return GetMonData(mon, MON_DATA_SPDEF_EV);
+    }
+    return 0;
+}
+
+static void ItemEffectToStatString(u8 effectType, u8 *dest)
+{
+    switch (effectType)
+    {
+    case ITEM_EFFECT_HP_EV:
+        StringCopy(dest, gText_HP3);
+        break;
+    case ITEM_EFFECT_ATK_EV:
+        StringCopy(dest, gText_Attack3);
+        break;
+    case ITEM_EFFECT_DEF_EV:
+        StringCopy(dest, gText_Defense3);
+        break;
+    case ITEM_EFFECT_SPEED_EV:
+        StringCopy(dest, gText_Speed2);
+        break;
+    case ITEM_EFFECT_SPATK_EV:
+        StringCopy(dest, gText_SpAtk3);
+        break;
+    case ITEM_EFFECT_SPDEF_EV:
+        StringCopy(dest, gText_SpDef3);
+        break;
+    }
+}
+
+void ItemUseCB_ReduceEV(u8 taskId, TaskFunc func)
+{
+    struct Pokemon *mon = &gPlayerParty[gPartyMenu.slotId];
+    u16 item = gSpecialVar_ItemId;
+    u8 effectType = GetItemEffectType(item);
+    u16 friendship = GetMonData(mon, MON_DATA_FRIENDSHIP);
+    u16 ev = ItemEffectToMonEv(mon, effectType);
+    bool8 cannotUseEffect = ExecuteTableBasedItemEffect_(gPartyMenu.slotId, item, 0);
+    u16 newFriendship = GetMonData(mon, MON_DATA_FRIENDSHIP);
+    u16 newEv = ItemEffectToMonEv(mon, effectType);
+
+    if (cannotUseEffect || (friendship == newFriendship && ev == newEv))
+    {
+        gPartyMenuUseExitCallback = FALSE;
+        PlaySE(SE_SELECT);
+        DisplayPartyMenuMessage(gText_WontHaveEffect, TRUE);
+        ScheduleBgCopyTilemapToVram(2);
+        gTasks[taskId].func = func;
+    }
+    else
+    {
+        gPartyMenuUseExitCallback = TRUE;
+        PlaySE(SE_USE_ITEM);
+        RemoveBagItem(item, 1);
+        GetMonNickname(mon, gStringVar1);
+        ItemEffectToStatString(effectType, gStringVar2);
+        if (friendship != newFriendship)
+        {
+            StringExpandPlaceholders(gStringVar4, gText_PkmnFriendlyBaseVar2Fell);
+        }
+        else
+        {
+            StringExpandPlaceholders(gStringVar4, gText_PkmnAdoresBaseVar2Fell);
+        }
+        DisplayPartyMenuMessage(gStringVar4, TRUE);
+        ScheduleBgCopyTilemapToVram(2);
+        gTasks[taskId].func = func;
+    }
+}
+
 static void Task_DisplayHPRestoredMessage(u8 taskId)
 {
     GetMonNickname(&gPlayerParty[gPartyMenu.slotId], gStringVar1);

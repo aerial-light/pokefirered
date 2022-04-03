@@ -55,6 +55,7 @@ void ItemUseCB_Medicine(u8 taskId, TaskFunc func);
 void ItemUseCB_MedicineStep(u8 taskId, TaskFunc func);
 void ItemUseCB_PPRecovery(u8 taskId, UNUSED TaskFunc func);
 void ItemUseCB_PPUp(u8 taskId, UNUSED TaskFunc func);
+void ItemUseCB_ReduceEV(u8 taskId, TaskFunc func);
 u16 ItemIdToBattleMoveId(u16 item);
 bool8 IsMoveHm(u16 move);
 bool8 MonKnowsMove(struct Pokemon *mon, u16 move);

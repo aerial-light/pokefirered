@@ -2116,7 +2116,11 @@ void CalculateMonStats(struct Pokemon *mon)
         if (currentHP == 0 && oldMaxHP == 0)
             currentHP = newMaxHP;
         else if (currentHP != 0)
+        {
             currentHP += newMaxHP - oldMaxHP;
+            if (currentHP <= 0)
+                currentHP = 1; // fixes pomeg berry glitch
+        }
         else
             return;
     }
@@ -3917,6 +3921,7 @@ bool8 ExecuteTableBasedItemEffect(struct Pokemon *mon, u16 item, u8 partyIndex, 
 bool8 PokemonUseItemEffects(struct Pokemon *mon, u16 item, u8 partyIndex, u8 moveIndex, u8 e)
 {
     u32 data;
+    s32 signedData;
     s32 friendship;
     s32 cmdIndex;
     bool8 retVal = TRUE;
@@ -3928,7 +3933,7 @@ bool8 PokemonUseItemEffects(struct Pokemon *mon, u16 item, u8 partyIndex, u8 mov
     u8 battleMonId = 4;
     u16 heldItem;
     u8 val;
-    u32 evDelta;
+    s32 evDelta;
 
     heldItem = GetMonData(mon, MON_DATA_HELD_ITEM, NULL);
     if (heldItem == ITEM_ENIGMA_BERRY)
@@ -4115,19 +4120,33 @@ bool8 PokemonUseItemEffects(struct Pokemon *mon, u16 item, u8 partyIndex, u8 mov
                     case 0: // EV_HP
                     case 1: // EV_ATK
                         evCount = GetMonEVCount(mon);
-                        if (evCount >= 510)
-                            return TRUE;
-                        data = GetMonData(mon, sGetMonDataEVConstants[i], NULL);
-                        if (data < 252)
+                        evDelta = (s8)itemEffect[idx];
+                        signedData = GetMonData(mon, sGetMonDataEVConstants[i], NULL);
+                        if (evDelta > 0)
                         {
-                            if (data + itemEffect[idx] > 252)
-                                evDelta = 252 - (data + itemEffect[idx]) + itemEffect[idx];
-                            else
-                                evDelta = itemEffect[idx];
-                            if (evCount + evDelta > 510)
-                                evDelta += 510 - (evCount + evDelta);
-                            data += evDelta;
-                            SetMonData(mon, sGetMonDataEVConstants[i], &data);
+                            if (evCount >= 510)
+                                return TRUE;
+                            if (signedData < 252)
+                            {
+                                if (signedData + evDelta > 252)
+                                    evDelta = 252 - signedData;
+                                if (evCount + evDelta > 510)
+                                    evDelta = 510 - evCount;
+                                signedData += evDelta;
+                                SetMonData(mon, sGetMonDataEVConstants[i], &signedData);
+                                CalculateMonStats(mon);
+                                idx++;
+                                retVal = FALSE;
+                            }
+                        }
+                        else
+                        {
+                            if (signedData == 0)
+                                return TRUE;
+                            signedData += evDelta;
+                            if (signedData < 0)
+                                signedData = 0;
+                            SetMonData(mon, sGetMonDataEVConstants[i], &signedData);
                             CalculateMonStats(mon);
                             idx++;
                             retVal = FALSE;
@@ -4299,19 +4318,33 @@ bool8 PokemonUseItemEffects(struct Pokemon *mon, u16 item, u8 partyIndex, u8 mov
                     case 2: // EV_SPDEF
                     case 3: // EV_SPATK
                         evCount = GetMonEVCount(mon);
-                        if (evCount >= 510)
-                            return TRUE;
-                        data = GetMonData(mon, sGetMonDataEVConstants[i + 2], NULL);
-                        if (data < 100)
+                        evDelta = (s8)itemEffect[idx];
+                        signedData = GetMonData(mon, sGetMonDataEVConstants[i + 2], NULL);
+                        if (evDelta > 0)
                         {
-                            if (data + itemEffect[idx] > 100)
-                                evDelta = 100 - (data + itemEffect[idx]) + itemEffect[idx];
-                            else
-                                evDelta = itemEffect[idx];
-                            if (evCount + evDelta > 510)
-                                evDelta += 510 - (evCount + evDelta);
-                            data += evDelta;
-                            SetMonData(mon, sGetMonDataEVConstants[i + 2], &data);
+                            if (evCount >= 510)
+                                return TRUE;
+                            if (signedData < 252)
+                            {
+                                if (signedData + evDelta > 252)
+                                    evDelta = 252 - signedData;
+                                if (evCount + evDelta > 510)
+                                    evDelta = 510 - evCount;
+                                signedData += evDelta;
+                                SetMonData(mon, sGetMonDataEVConstants[i + 2], &signedData);
+                                CalculateMonStats(mon);
+                                retVal = FALSE;
+                                idx++;
+                            }
+                        }
+                        else
+                        {
+                            if (signedData == 0)
+                                return TRUE;
+                            signedData += evDelta;
+                            if (signedData < 0)
+                                signedData = 0;
+                            SetMonData(mon, sGetMonDataEVConstants[i + 2], &signedData);
                             CalculateMonStats(mon);
                             retVal = FALSE;
                             idx++;
@@ -4580,7 +4613,7 @@ bool8 PokemonItemUseNoEffect(struct Pokemon *mon, u16 item, u8 partyIndex, u8 mo
                         if (GetMonEVCount(mon) >= 510)
                             return TRUE;
                         data = GetMonData(mon, sGetMonDataEVConstants[i], NULL);
-                        if (data < 100)
+                        if (data < 252)
                         {
                             idx++;
                             retVal = FALSE;
@@ -4657,7 +4690,7 @@ bool8 PokemonItemUseNoEffect(struct Pokemon *mon, u16 item, u8 partyIndex, u8 mo
                         if (GetMonEVCount(mon) >= 510)
                             return TRUE;
                         data = GetMonData(mon, sGetMonDataEVConstants[i + 2], NULL);
-                        if (data < 100)
+                        if (data < 252)
                         {
                             retVal = FALSE;
                             idx++;
