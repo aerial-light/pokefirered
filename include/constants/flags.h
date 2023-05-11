@@ -182,13 +182,13 @@
 #define FLAG_HIDE_SAFFRON_CITY_POKECENTER_SABRINA_JOURNALS 0x0AE
 
 // Unused?
-#define FLAG_HIDE_CELADON_CITY_METAL_COAT                  0x0AF
-#define FLAG_HIDE_CINNABAR_ISLAND_UPGRADE                  0x0B0
-#define FLAG_HIDE_FUCHSIA_CITY_KINGS_ROCK                  0x0B1
-#define FLAG_HIDE_ROUTE_20_DRAGON_SCALE                    0x0B2
-#define FLAG_HIDE_ROUTE_21_DEEPSEASCALE                    0x0B3
-#define FLAG_HIDE_ROUTE_21_DEEPSEATOOTH                    0x0B4
-#define FLAG_0x0B5               0x0B5
+#define FLAG_HIDE_CELADON_CITY_METAL_COAT                  0x0AF // not implemented
+#define FLAG_HIDE_CINNABAR_ISLAND_UPGRADE                  0x0B0 // not implemented
+#define FLAG_HIDE_FUCHSIA_CITY_KINGS_ROCK                  0x0B1 // not implemented
+#define FLAG_HIDE_ROUTE_20_DRAGON_SCALE                    0x0B2 // not implemented
+#define FLAG_HIDE_ROUTE_21_DEEPSEASCALE                    0x0B3 // not implemented
+#define FLAG_HIDE_ROUTE_21_DEEPSEATOOTH                    0x0B4 // not implemented
+#define FLAG_LORELEI_UNAVAILABLE                           0x0B5 // not implemented
 #define FLAG_0x0B6               0x0B6
 #define FLAG_0x0B7               0x0B7
 #define FLAG_0x0B8               0x0B8

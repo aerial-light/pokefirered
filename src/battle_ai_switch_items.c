@@ -667,6 +667,13 @@ static bool8 ShouldSwitch(void)
         *(gBattleStruct->AI_monToSwitchIntoId + (GetBattlerPosition(gActiveBattler) >> 1)) = PARTY_SIZE;
         return TRUE;
     }
+
+    if (ShouldSwitchIfPerishSong()
+     || ShouldSwitchIfWonderGuard()
+     || FindMonThatAbsorbsOpponentsMove()
+     || ShouldSwitchIfNaturalCure())
+        return TRUE;
+
     return FALSE;
 
     // Do not need the following

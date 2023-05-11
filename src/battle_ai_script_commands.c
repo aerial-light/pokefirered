@@ -268,6 +268,7 @@ void BattleAI_HandleItemUseBeforeAISetup(void)
         data[i] = 0;
 
     // Items are allowed to use in ONLY trainer battles.
+    #ifndef NO_TRAINER_ITEMS
     if ((gBattleTypeFlags & BATTLE_TYPE_TRAINER)
         && (gTrainerBattleOpponent_A != SECRET_BASE_OPPONENT)
         && !(gBattleTypeFlags & (BATTLE_TYPE_TRAINER_TOWER | BATTLE_TYPE_EREADER_TRAINER | BATTLE_TYPE_BATTLE_TOWER | BATTLE_TYPE_SAFARI | BATTLE_TYPE_LINK))
@@ -282,7 +283,7 @@ void BattleAI_HandleItemUseBeforeAISetup(void)
             }
         }
     }
-
+    #endif
     BattleAI_SetupAIData();
 }
 

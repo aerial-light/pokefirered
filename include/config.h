@@ -46,4 +46,7 @@
 #endif // UBFIX
 #endif // MODERN
 
+// Feature flags
+#define NO_TRAINER_ITEMS
+
 #endif // GUARD_CONFIG_H
